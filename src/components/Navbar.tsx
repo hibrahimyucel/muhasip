@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+// hamburger icon
 import { FiList } from "react-icons/fi";
 
 export default function Navbar() {
@@ -8,13 +9,32 @@ export default function Navbar() {
   const handleDrawerToggle = () => {
     setIsOpen(!isOpen);
   };
-  const navItems = [
-    { name: "Home", href: "/" },
-    { name: "About", href: "/about" },
-    { name: "News", href: "/news" },
-    { name: "Contact", href: "/contact" },
-    { name: "Settings", href: "/settings" },
-  ];
+
+  function NavLinks() {
+    const navItems = [
+      { name: "Home", href: "/" },
+      { name: "About", href: "/about" },
+      { name: "News", href: "/news" },
+      { name: "Contact", href: "/contact" },
+      { name: "Settings", href: "/settings" },
+    ];
+    return navItems.map((item, index) => (
+      <li
+        key={index}
+        className="text-xl hover:text-blue-900 hover:font-semibold"
+      >
+        <Link
+          onClick={() => {
+            setIsOpen(false);
+          }}
+          href={item.href}
+          className="flex items-center"
+        >
+          {item.name}
+        </Link>
+      </li>
+    ));
+  }
   function MobileMenuButton() {
     return (
       <button
@@ -48,22 +68,7 @@ export default function Navbar() {
               <FiList className="text-5xl" />
             </button>
           </li>
-          {navItems.map((item, index) => (
-            <li
-              key={index}
-              className="text-3xl hover:text-blue-900 hover:font-semibold"
-            >
-              <Link
-                onClick={() => {
-                  setIsOpen(false);
-                }}
-                href={item.href}
-                className="flex items-center"
-              >
-                {item.name}
-              </Link>
-            </li>
-          ))}
+          <NavLinks />
         </ul>
       </div>
     );
@@ -78,33 +83,15 @@ export default function Navbar() {
       </div>
     );
   }
-  function NavLinks() {
-    return (
-      <ul className="absolute right-0 flex flex-row space-x-6">
-        {navItems.map((item, index) => (
-          <li
-            key={index}
-            className="text-xl hover:text-blue-900 hover:font-semibold"
-          >
-            <Link
-              onClick={() => {
-                setIsOpen(false);
-              }}
-              href={item.href}
-              className="flex items-center"
-            >
-              {item.name}
-            </Link>
-          </li>
-        ))}
-      </ul>
-    );
-  }
+
   return (
     <>
       <div className="hidden relative py-6 sm:flex flex-col justify-center">
         <LogoLink />
-        <NavLinks />
+        <ul className="absolute right-0 flex flex-row space-x-6">
+          {" "}
+          <NavLinks />
+        </ul>
       </div>
       <div className="sm:hidden relative flex flex-row py-6 bg-blend-difference">
         <LogoLink />
