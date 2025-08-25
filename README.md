@@ -9,12 +9,15 @@
 - [x] [Create app - Install Tailwind CSS with Next.js ](https://tailwindcss.com/docs/installation/framework-guides/nextjs)
 - [x] Create [Git-Hub](https://github.com/) repository
 - [x] Push your project to remote git repository
+
   ```javascript
   git remote add origin https://github.com/...
   git branch -M main
   git push -u origin main
   ```
 
-```
+- [x] Manage main layout, add few pages. (About, Settings, Contact Us)
+- [x] [Create a responsive navigation bar and use it.](https://medium.com/@hanekcud/how-to-create-responsive-navbar-in-next-js-using-tailwind-css-eed2e7dc925a)
 
-```
+- [ ] Authentication - Clerk
+- [ ] Database - Convex
