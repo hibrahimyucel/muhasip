@@ -1,14 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { FiList } from "react-icons/fi";
 
 export default function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const [isOpen, setIsOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setIsOpen(!isOpen);
   };
-
-  // Navigation items array
   const navItems = [
     { name: "Home", href: "/" },
     { name: "About", href: "/about" },
@@ -16,121 +15,102 @@ export default function Navbar() {
     { name: "Contact", href: "/contact" },
     { name: "Settings", href: "/settings" },
   ];
-
-  return (
-    <div>
-      <nav className="block w-full max-w-screen px-4 py-4 mx-auto bg-white bg-opacity-90 sticky top-3 shadow lg:px-8 backdrop-blur-lg backdrop-saturate-150 z-[9999]">
-        <div className="container flex flex-wrap items-center justify-between mx-auto text-slate-800">
-          <Link
-            href="/"
-            className="mr-4 block cursor-pointer py-1.5 text-red-600 font-bold text-2xl"
-          >
-            NEXTNEWS
-          </Link>
-
-          <div className="lg:hidden">
+  function MobileMenuButton() {
+    return (
+      <button
+        className="absolute right-2 top-2 p-2"
+        type="button"
+        onClick={handleDrawerToggle}
+      >
+        <FiList className="text-5xl" />
+      </button>
+    );
+  }
+  function MobileDrawer() {
+    return (
+      <div
+        className={`fixed flex flex-col items-end z-10 right-2 top-2 h-full w-full 
+          transition-transform duration-300 
+          transform ${isOpen ? "translate-x-0" : "translate-x-full"}`}
+        onClick={() => {
+          setIsOpen(false);
+        }}
+      >
+        <ul className="flex flex-col justify-center items-end space-y-2">
+          <li className="text-3xl hover:text-blue-900 hover:font-semibold">
             <button
-              className="relative ml-auto h-6 max-h-[40px] w-6 max-w-[40px] select-none rounded-lg text-center align-middle text-xs font-medium uppercase text-inherit transition-all hover:bg-transparent focus:bg-transparent active:bg-transparent disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              onClick={toggleMobileMenu}
+              className=" right-2 top-2 p-2"
               type="button"
+              onClick={() => {
+                setIsOpen(false);
+              }}
             >
-              <span className="absolute transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-8 h-8"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  ></path>
-                </svg>
-              </span>
+              <FiList className="text-5xl" />
             </button>
-          </div>
-
-          {/* Mobile Menu */}
-          <div
-            className={`fixed top-0 left-0 min-h-screen w-64 bg-slate-100 shadow-lg transform transition-transform duration-300 ease-in-out ${
-              isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-            } lg:hidden z-50`}
-          >
-            <div className="flex flex-row items-center border-b pb-4">
+          </li>
+          {navItems.map((item, index) => (
+            <li
+              key={index}
+              className="text-3xl hover:text-blue-900 hover:font-semibold"
+            >
               <Link
-                href="/"
-                className="cursor-pointer text-red-600 font-bold text-xl pt-4 ps-4"
+                onClick={() => {
+                  setIsOpen(false);
+                }}
+                href={item.href}
+                className="flex items-center"
               >
-                NEXTNEWS
+                {item.name}
               </Link>
-              <button
-                onClick={toggleMobileMenu}
-                className="absolute top-4 right-4 text-slate-600 hover:text-red-500"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-8 h-8"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            </div>
-            <ul className="flex flex-col h-full gap-4 p-4">
-              {navItems.map((item, index) => (
-                <li
-                  key={index}
-                  className="flex items-center p-1 text-lg gap-x-2 text-slate-600 hover:text-red-500"
-                >
-                  <Link
-                    onClick={() => {
-                      setIsMobileMenuOpen(false);
-                    }}
-                    href={item.href}
-                    className="flex items-center"
-                  >
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-              <li className="mt-4">
-                <button className="bg-red-600 text-white px-8 py-2 rounded-md hover:bg-red-500">
-                  Login
-                </button>
-              </li>
-            </ul>
-          </div>
-
-          {/* Desktop Menu */}
-          <div className="hidden lg:block">
-            <ul className="flex flex-col gap-2 mt-2 mb-4 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-6">
-              {navItems.map((item, index) => (
-                <li
-                  key={index}
-                  className="flex items-center p-1 text-lg gap-x-2 text-slate-600 hover:text-red-500"
-                >
-                  <Link href={item.href} className="flex items-center">
-                    {item.name}
-                  </Link>
-                </li>
-              ))}
-              <li>
-                <button className="bg-red-600 hover:bg-red-500 text-white px-8 py-2 rounded-md">
-                  Login
-                </button>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+  function LogoLink() {
+    return (
+      <div className="mb-4 text-left sm:mb-0">
+        <Link href="/">
+          Main
+          {/* Your logo component */}
+        </Link>
+      </div>
+    );
+  }
+  function NavLinks() {
+    return (
+      <ul className="absolute right-0 flex flex-row space-x-6">
+        {navItems.map((item, index) => (
+          <li
+            key={index}
+            className="text-xl hover:text-blue-900 hover:font-semibold"
+          >
+            <Link
+              onClick={() => {
+                setIsOpen(false);
+              }}
+              href={item.href}
+              className="flex items-center"
+            >
+              {item.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+  return (
+    <>
+      <div className="hidden relative py-6 sm:flex flex-col justify-center">
+        <LogoLink />
+        <NavLinks />
+      </div>
+      <div className="sm:hidden relative flex flex-row py-6 bg-blend-difference">
+        <LogoLink />
+        <MobileMenuButton />
+        <MobileDrawer />
+      </div>
+    </>
   );
 }
