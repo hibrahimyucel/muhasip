@@ -18,6 +18,7 @@ export default function Navbar() {
       { name: "News", href: "/news" },
       { name: "Contact", href: "/contact" },
       { name: "Settings", href: "/settings" },
+      { name: "Profile", href: "/profile" },
     ];
     return navItems.map((item, index) => (
       <li
