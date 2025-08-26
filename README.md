@@ -19,5 +19,7 @@
 - [x] Manage main layout, add few pages. (About, Settings, Contact Us)
 - [x] [Create a responsive navigation bar and use it.](https://medium.com/@hanekcud/how-to-create-responsive-navbar-in-next-js-using-tailwind-css-eed2e7dc925a)
 
-- [ ] Authentication - Clerk
+- [x] [Authentication - Clerk](https://clerk.com/docs/quickstarts/nextjs)
+      Sign-in, Prpfile page, middleware.ts
+
 - [ ] Database - Convex
