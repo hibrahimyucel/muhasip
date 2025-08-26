@@ -2,7 +2,8 @@
 import Link from "next/link";
 import { useState } from "react";
 // hamburger icon
-import { FiList } from "react-icons/fi";
+import { FiList, FiLogIn } from "react-icons/fi";
+import { SignedIn, UserButton } from "@clerk/nextjs";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -75,11 +76,11 @@ export default function Navbar() {
   }
   function LogoLink() {
     return (
-      <div className="mb-4 text-left sm:mb-0">
-        <Link href="/">
-          Main
-          {/* Your logo component */}
-        </Link>
+      <div className="mb-4 text-left sm:mb-0 flex">
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
+        <FiLogIn color="blue" fontSize="2rem" />
       </div>
     );
   }
@@ -89,7 +90,6 @@ export default function Navbar() {
       <div className="hidden relative py-6 sm:flex flex-col justify-center">
         <LogoLink />
         <ul className="absolute right-0 flex flex-row space-x-6">
-          {" "}
           <NavLinks />
         </ul>
       </div>
