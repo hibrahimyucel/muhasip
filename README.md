@@ -20,6 +20,7 @@
 - [x] [Create a responsive navigation bar and use it.](https://medium.com/@hanekcud/how-to-create-responsive-navbar-in-next-js-using-tailwind-css-eed2e7dc925a)
 
 - [x] [Authentication - Clerk](https://clerk.com/docs/quickstarts/nextjs)
-      Sign-in, Prpfile page, middleware.ts
+      Sign-in page, src/middleware.ts
 
-- [ ] Database - Convex
+- [x] Database - mySql - Host : [Aiven free plan](https://aiven.io/mysql) - database provider library : mysql2 - API file : src/api/{apiname}/route.ts - .env file example connection string :
+      MYSQL_DATABASE_URL=mysql://avnadmin:password@subdomain.aivencloud.com:port/defaultdb
