@@ -3,6 +3,7 @@ export type user = {
   fullname: string;
   email: string;
   idClerk: string;
+  imgUrl: string;
 };
 export async function getUsers() {
   const postData = {

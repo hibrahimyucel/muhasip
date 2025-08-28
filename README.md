@@ -22,5 +22,49 @@
 - [x] [Authentication - Clerk](https://clerk.com/docs/quickstarts/nextjs)
       Sign-in page, src/middleware.ts
 
-- [x] Database - mySql - Host : [Aiven free plan](https://aiven.io/mysql) - database provider library : mysql2 - API file : src/api/{apiname}/route.ts - .env file example connection string :
-      MYSQL_DATABASE_URL=mysql://avnadmin:password@subdomain.aivencloud.com:port/defaultdb
+- [x] Database - mySql
+- Host : [Aiven free plan](https://aiven.io/mysql)
+- database provider library : mysql2
+- API file : src/api/{apiname}/route.ts
+- .env file example connection string :
+  MYSQL_DATABASE_URL=mysql://avnadmin:password@subdomain.aivencloud.com:port/defaultdb
+
+- [x] Clerk Webhooks & mySql sync.
+
+- [Clerk referance](https://clerk.com/docs/webhooks/sync-data)
+- Uses Clerk auth instead of JWT.
+- [ngrok Tunnel](https://ngrok.com/)
+- Users Table (mySql)
+
+```sql
+CREATE TABLE "users" (
+  "idusers" int NOT NULL AUTO_INCREMENT,
+  "fullname" varchar(100) DEFAULT NULL,
+  "email" varchar(100) DEFAULT NULL,
+  "idclerk" varchar(100) NOT NULL,
+  "isadmin" tinyint DEFAULT NULL,
+  "ismember" tinyint DEFAULT NULL,
+  "imgurl" varchar(200) DEFAULT NULL,
+  PRIMARY KEY ("idusers")
+);
+SELECT * FROM defaultdb.users;
+```
+
+- next.config.ts : added remote pattern to get profile images from clerk
+
+```js
+import type { NextConfig } from "next";
+const nextConfig: NextConfig = {
+  /* config options here */
+};
+module.exports = {
+  images: {
+    remotePatterns: [new URL("https://img.clerk.com/**")],
+  },
+};
+export default nextConfig;
+```
+
+- [x] Mobile navbar removed, Sign In/User button placed.
+
+- [ ] Db interfaces/api organized, to-do crud implemented
