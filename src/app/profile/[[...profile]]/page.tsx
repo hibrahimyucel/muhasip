@@ -1,5 +1,5 @@
-import { UserProfile } from "@clerk/nextjs";
+import PagePlaceholder from "@/components/page-placeholder";
 
 export default function ProfilePage() {
-  return <UserProfile />;
+  return <PagePlaceholder pageName="Profile" />;
 }

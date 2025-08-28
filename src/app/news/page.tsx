@@ -1,42 +1,18 @@
 "use client";
 import React, { useState } from "react";
-
-import PagePlaceholder from "@/components/page-placeholder";
+import { getUsers, user } from "@/libClient/users";
 
 export default function NewsPage() {
-  type user = {
-    idusers: number;
-    fullname: string;
-    email: string;
-  };
   const [users, setUsers] = useState([]);
-  async function getUsers() {
-    const postData = {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_URL}/api/users`,
-      postData
-    );
-    const resp = await res.json();
-    let usersp = [];
-    if (res.ok) {
-      usersp = resp.results;
-    }
-
-    setUsers(usersp);
+  async function GetUsers() {
+    setUsers(await getUsers());
   }
-
   return (
     <main>
       <div>
         <button
           type="button"
-          onClick={getUsers}
+          onClick={GetUsers}
           className="span-4xl bg-amber-300 rounded-2xl p-2"
         >
           get Users
