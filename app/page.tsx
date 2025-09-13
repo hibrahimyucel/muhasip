@@ -16,7 +16,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="font-sans">
+    <div className="font-sans bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90%">
       {users.map((value, index) => {
         return (
           <p key={index.toString()} className="border">
