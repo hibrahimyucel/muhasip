@@ -11,7 +11,7 @@ export default function UsersPage() {
       [{ fullname: "1%", email: "q%" }, "LIKE"],
       [{ fullname: "1%", email: "q%" }, "="],
     ]);
-    console.log(usr);
+
     setusr(usr);
   }
   useEffect(() => {

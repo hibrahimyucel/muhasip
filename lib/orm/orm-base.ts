@@ -33,7 +33,7 @@ export abstract class TableBase<T, IDType> {
 
     whereClause = whereClause ? `OR ( ${whereClause}  )` : "";
     const sql = `SELECT * FROM ${this.tableName} WHERE 1=2 ${whereClause}`;
-    //console.log("Get SQL : ", sql);
+
     try {
       const res = await fetch(this.apiPath, {
         method: "GET",
