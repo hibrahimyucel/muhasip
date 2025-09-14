@@ -1,4 +1,5 @@
-export abstract class Table<T, IDType> {
+type sqlOperator = "=" | "LIKE" | ">" | "<";
+export abstract class TableBase<T, IDType> {
   tableName: string;
   idField: string;
   apiPath: string;
@@ -8,7 +9,47 @@ export abstract class Table<T, IDType> {
     this.idField = idField;
     this.apiPath = apiPath ? apiPath : "/api/db";
   }
+  /* usage GetData
+  const usr = await Table.Users.GetData([
+       [{ fullname: "1%", email: "q%" }, "like"],
+       [{ fullname: "1%", email: "q%" }, "="],
+     ]);
+ */
 
+  async GetData(whereProps: [Partial<T>, sqlOperator][]): Promise<T[]> {
+    let whereClause: string = "";
+    let paramValues: any[] = [];
+
+    whereProps.map((whereProp, index) => {
+      const keys = Object.keys(whereProp[0]);
+      const values = Object.values(whereProp[0]);
+      values.map((v) => paramValues.push(v));
+
+      whereClause += index ? "AND " : "";
+      whereClause += keys
+        .map((key) => `${key} ${whereProp[1]} ? `)
+        .join("AND ");
+    });
+
+    whereClause = whereClause ? `OR ( ${whereClause}  )` : "";
+    const sql = `SELECT * FROM ${this.tableName} WHERE 1=2 ${whereClause}`;
+    //console.log("Get SQL : ", sql);
+    try {
+      const res = await fetch(this.apiPath, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          data: JSON.stringify({ Sql: sql, Params: paramValues }),
+        },
+      });
+      if (res.ok) {
+        return await res.json();
+      }
+    } catch (error: any) {
+      throw new Error(`Failed to retrieve records: ${error.message}`);
+    }
+    return [];
+  }
   /*
   async Insert(fields: Partial<T>): Promise<T> {
     const keys = Object.keys(fields);
@@ -116,6 +157,7 @@ export abstract class Table<T, IDType> {
       throw new Error(`Failed to retrieve record: ${error.message}`);
     }
   }
+  /*
   async findFirstWhere<K extends keyof T>(
     key: K,
     value: T[K],

@@ -1,4 +1,4 @@
-import { Table } from "../orm/orm-base";
+import { TableBase } from "../orm/orm-base";
 
 export interface UsersData {
   id?: number;
@@ -7,7 +7,7 @@ export interface UsersData {
   idclerk?: string | null;
 }
 
-export class UsersTable extends Table<UsersData, number> {
+export class UsersTable extends TableBase<UsersData, number> {
   constructor() {
     super("users", "id", "");
   }
