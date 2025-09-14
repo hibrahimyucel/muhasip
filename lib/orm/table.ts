@@ -1,6 +1,11 @@
-import { UsersTable } from "./table-users";
+import { UsersData } from "./table-data";
+import { TableBase } from "./orm-base";
 
-export * from "./table-users";
+class UsersTable extends TableBase<UsersData, number> {
+  constructor() {
+    super("users", "id", "");
+  }
+}
 
 class Tables {
   constructor() {}

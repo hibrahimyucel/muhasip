@@ -1,16 +1,13 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { UsersData } from "@/lib/orm/table-users";
 import { Table } from "@/lib/orm/table";
+import { UsersData } from "@/lib/orm/table-data";
 
 export default function UsersPage() {
   const [users, setusr] = useState<UsersData[]>([]);
 
   async function getUsers() {
-    const usr = await Table.Users.GetData([
-      [{ fullname: "1%", email: "q%" }, "LIKE"],
-      [{ fullname: "1%", email: "q%" }, "="],
-    ]);
+    const usr = await Table.Users.GetData([[{ id: 3 }, "<"]]);
 
     setusr(usr);
   }
