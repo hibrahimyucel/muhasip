@@ -7,7 +7,7 @@ export default function UsersPage() {
   const [users, setusr] = useState<UsersData[]>([]);
 
   async function getUsers() {
-    const usr = await Table.Users.GetData([[{ id: 3 }, "<"]]);
+    const usr = await Table.Users.GetData([[{ idusers: 3 }, "<"]]);
 
     setusr(usr);
   }

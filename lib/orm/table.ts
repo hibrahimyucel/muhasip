@@ -3,7 +3,7 @@ import { TableBase } from "./orm-base";
 
 class UsersTable extends TableBase<UsersData, number> {
   constructor() {
-    super("users", "id", "");
+    super("users", "idusers", "");
   }
 }
 

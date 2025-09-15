@@ -1,4 +1,34 @@
+import { json } from "stream/consumers";
+
+/* 
+Object Relational Mapping Database Tools
+Created : 10.09.2025 İbrahim YÜCEL
+Comment : Base class for all simple CRUD operations on tables&views 
+*/
 type sqlOperator = "=" | "LIKE" | ">" | "<";
+
+export async function Query(
+  sql: string,
+  params: any[],
+  api: string = "/api/db",
+): Promise<[]> {
+  try {
+    const res = await fetch(api, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        data: JSON.stringify({ Sql: sql, Params: params }),
+      },
+    });
+    if (res.ok) {
+      return await res.json();
+    }
+  } catch (error: any) {
+    throw new Error(`Failed to retrieve records: ${error.message}`);
+  }
+  return [];
+}
+
 export abstract class TableBase<T, IDType> {
   tableName: string;
   idField: string;
@@ -9,13 +39,14 @@ export abstract class TableBase<T, IDType> {
     this.idField = idField;
     this.apiPath = apiPath ? apiPath : "/api/db";
   }
-  /* usage GetData
+
+  /* 
+  usage GetData
   const usr = await Table.Users.GetData([
-       [{ fullname: "1%", email: "q%" }, "like"],
+       [{ fullname: "1%", email: "q%" }, "LIKE"],
        [{ fullname: "1%", email: "q%" }, "="],
      ]);
  */
-
   async GetData(whereProps: [Partial<T>, sqlOperator][]): Promise<T[]> {
     let whereClause: string = "";
     let paramValues: any[] = [];
@@ -33,22 +64,7 @@ export abstract class TableBase<T, IDType> {
 
     whereClause = whereClause ? `OR ( ${whereClause}  )` : "";
     const sql = `SELECT * FROM ${this.tableName} WHERE 1=2 ${whereClause}`;
-
-    try {
-      const res = await fetch(this.apiPath, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          data: JSON.stringify({ Sql: sql, Params: paramValues }),
-        },
-      });
-      if (res.ok) {
-        return await res.json();
-      }
-    } catch (error: any) {
-      throw new Error(`Failed to retrieve records: ${error.message}`);
-    }
-    return [];
+    return await Query(sql, paramValues);
   }
   /*
   async Insert(fields: Partial<T>): Promise<T> {

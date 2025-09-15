@@ -1,5 +1,5 @@
 export interface UsersData {
-  id?: number;
+  idusers?: number;
   fullname?: string | null;
   email?: string | null;
   idclerk?: string | null;

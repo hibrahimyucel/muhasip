@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 
-const db = mysql.createPool(`${process.env.MYSQL_DATABASE_URL}`);
+export const db = mysql.createPool(`${process.env.MYSQL_DATABASE_URL}`);
 /** try {
   const connection = await db.getConnection();
   console.log("database connected");
@@ -11,12 +11,12 @@ const db = mysql.createPool(`${process.env.MYSQL_DATABASE_URL}`);
 }
 */
 export async function Query(sql: string, values: string[]) {
-  console.log(
+  /*console.log(
     "DB Connection Query Sql : ",
     sql,
     " DB Connection Query Params : ",
     values
-  );
+  );*/
   const conn = await db.getConnection();
   try {
     const [results, fields] = await conn.query(sql, values);
