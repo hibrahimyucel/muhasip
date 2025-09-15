@@ -1,22 +1,20 @@
 import mysql from "mysql2/promise";
 
-export const db = mysql.createPool(`${process.env.MYSQL_DATABASE_URL}`);
-/** try {
-  const connection = await db.getConnection();
-  console.log("database connected");
-  connection.release();
-} catch (err) {
-  console.error("database connection error : ", err);
-  process.exit(1);
+export interface TableFieldData {
+  Field?: string;
+  Type?: string;
+  Null?: string;
+  Key?: string;
+  Default?: string;
+  Extra?: string;
 }
-*/
+export interface TableData {
+  Name?: string;
+  fields?: TableFieldData[];
+}
+export const db = mysql.createPool(`${process.env.MYSQL_DATABASE_URL}`);
+
 export async function Query(sql: string, values: string[]) {
-  /*console.log(
-    "DB Connection Query Sql : ",
-    sql,
-    " DB Connection Query Params : ",
-    values
-  );*/
   const conn = await db.getConnection();
   try {
     const [results, fields] = await conn.query(sql, values);

@@ -1,5 +1,3 @@
-import { json } from "stream/consumers";
-
 /* 
 Object Relational Mapping Database Tools
 Created : 10.09.2025 İbrahim YÜCEL

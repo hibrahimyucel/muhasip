@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const dataStr = request.headers.get("data");
-  console.log("api/db GET Received Header : ", dataStr);
+
   if (dataStr) {
     const data = JSON.parse(dataStr);
     const response = await Query(data.Sql, data.Params);
