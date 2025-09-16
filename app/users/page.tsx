@@ -1,16 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Table } from "@/lib/orm/table";
-import { UsersData } from "@/lib/orm/table-data";
+import { usersData } from "@/lib/orm/table-data";
 
 export default function UsersPage() {
-  const [users, setusr] = useState<UsersData[]>([]);
+  const [users, setusers] = useState<usersData[]>([]);
 
   async function getUsers() {
-    const usr = await Table.Users.GetData([[{ idusers: 3 }, "<"]]);
-
-    setusr(usr);
+    const usr = await Table.users.GetData([[{ id_users: 3 }, "<"]]);
+    setusers(usr);
   }
+
   useEffect(() => {
     getUsers();
   }, []);
@@ -37,7 +37,7 @@ export default function UsersPage() {
 
           {users ? (
             <tbody className="text-left">
-              {users.map((u: UsersData, index) => {
+              {users.map((u: usersData, index) => {
                 return (
                   <tr key={index} className="border-t">
                     <td className="border-r px-0.5">{index + 1}</td>

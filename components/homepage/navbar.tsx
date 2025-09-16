@@ -2,14 +2,15 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useUser } from "@clerk/nextjs";
-import {  SignInButton, UserButton } from "@clerk/nextjs";
+import { SignInButton, UserButton } from "@clerk/nextjs";
 import Icons from "../icons";
+import Loading from "../loading";
 
 export default function Navbar() {
   const { isSignedIn, user, isLoaded } = useUser();
 
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <div className="flex h-full w-full rounded-t-sm">
