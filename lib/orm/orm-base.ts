@@ -7,7 +7,7 @@ type sqlOperator = "=" | "LIKE" | ">" | "<";
 
 export async function Query(
   sql: string,
-  params: any[],
+  params: string[],
   api: string = "/api/db",
 ): Promise<[]> {
   try {
@@ -21,13 +21,13 @@ export async function Query(
     if (res.ok) {
       return await res.json();
     }
-  } catch (error: any) {
-    throw new Error(`Failed to retrieve records: ${error.message}`);
+  } catch (error) {
+    throw new Error(`Failed to retrieve records: ${(error as Error).message}`);
   }
   return [];
 }
 
-export abstract class TableBase<T, IDType> {
+export abstract class TableBase<T> {
   tableName: string;
   idField: string;
   apiPath: string;
@@ -47,12 +47,12 @@ export abstract class TableBase<T, IDType> {
  */
   async GetData(whereProps: [Partial<T>, sqlOperator][]): Promise<T[]> {
     let whereClause: string = "";
-    let paramValues: any[] = [];
+    const paramValues: string[] = [];
 
     whereProps.map((whereProp, index) => {
       const keys = Object.keys(whereProp[0]);
       const values = Object.values(whereProp[0]);
-      values.map((v) => paramValues.push(v));
+      values.map((v) => paramValues.push(v as string));
 
       whereClause += index ? "AND " : "";
       whereClause += keys
@@ -151,8 +151,10 @@ export abstract class TableBase<T, IDType> {
       if (res.ok) {
         return await res.json();
       }
-    } catch (error: any) {
-      throw new Error(`Failed to retrieve records: ${error.message}`);
+    } catch (error) {
+      throw new Error(
+        `Failed to retrieve records: ${(error as Error).message}`,
+      );
     }
 
     return [];

@@ -17,12 +17,12 @@ export const db = mysql.createPool(`${process.env.MYSQL_DATABASE_URL}`);
 export async function Query(sql: string, values: string[]) {
   const conn = await db.getConnection();
   try {
-    const [results, fields] = await conn.query(sql, values);
+    const [results] = await conn.query(sql, values);
     conn.release();
     return results;
-  } catch (err: any) {
+  } catch (err) {
     console.log(err);
-    throw new Error(err.message);
+    throw new Error((err as Error).message);
   } finally {
     conn.release();
   }
@@ -41,13 +41,13 @@ export async function ExecQuery(sql: string, values: string[]) {
 } */
   const conn = await db.getConnection();
   try {
-    const [results, fields] = await conn.execute(sql, values);
+    const [results] = await conn.execute(sql, values);
     conn.release();
 
-    return fields;
-  } catch (err: any) {
+    return results;
+  } catch (err) {
     console.log(err);
-    throw new Error(err.message);
+    throw new Error((err as Error).message);
   } finally {
     conn.release();
   }

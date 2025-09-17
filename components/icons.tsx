@@ -1,7 +1,7 @@
 import React from "react";
 
-import  
-{  FiCheckCircle,
+import {
+  FiCheckCircle,
   FiFilter,
   FiList,
   FiXCircle,
@@ -11,8 +11,8 @@ import
   FiPlusCircle,
   FiLogOut,
   FiLogIn,
-  FiCircle}
- from "react-icons/fi";
+  FiCircle,
+} from "react-icons/fi";
 
 export type Ico =
   | "icoSortA"
@@ -34,7 +34,7 @@ export default function Icons({ icon }: { icon: Ico }) {
     case "icoSortD":
       return <FiArrowUp className="text-red-400" />;
     case "icoList":
-      return <FiList />;
+      return <FiList className="text-2xl text-blue-600" />;
     case "icoFilter":
       return <FiFilter />;
 

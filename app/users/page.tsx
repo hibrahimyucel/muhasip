@@ -21,7 +21,7 @@ export default function UsersPage() {
         <button
           type="button"
           onClick={getUsers}
-          className="span-4xl bg-diffcolor w-full rounded-md bg-amber-200 p-1"
+          className="span-4xl bg-diffcolor w-full rounded-md p-1"
         >
           get Users
         </button>

@@ -28,8 +28,8 @@ export default function Navbar() {
             />
           </div>
           <div className="flex h-full flex-col justify-center p-0.5">
-            <div className="font-serif text-slate-600">Muhasip</div>
-            <div className="font-serif text-sm text-slate-600">
+            <div className="font-serif">Muhasip</div>
+            <div className="font-serif text-sm">
               {isSignedIn ? user.fullName : ""}
             </div>
           </div>
