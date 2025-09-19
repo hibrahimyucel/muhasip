@@ -29,84 +29,72 @@ export function AccountsDBFilter({ onChange }: AccountsDBFilterProps) {
   }, [debouncedfullname]);
 
   return (
-    <div className="flex w-full flex-wrap gap-1">
-      <div className="bg-editbox border-editboxfocus m-0.5 rounded-sm border p-1">
-        {" Ticari Ünvanı : "}
-        <input
-          type="text"
-          value={fullname}
-          maxLength={150}
-          onChange={(e) => setfullname(e.target.value)}
-          placeholder="Ünvan"
-          className="focus:bg-editboxfocus w-50 rounded-sm px-1 outline-0 focus:outline-0"
-        />
-      </div>
-      <div className="bg-editbox border-editboxfocus m-0.5 rounded-sm border p-1 sm:block">
-        {" Hesap Adı : "}
-        <input
-          type="text"
-          value={fullname}
-          maxLength={150}
-          onChange={(e) => setfullname(e.target.value)}
-          placeholder="Ünvan"
-          className="focus:bg-editboxfocus border-editbox h-full w-50 rounded-sm px-1 outline-0 focus:outline-0"
-        />
-      </div>
-      <div className="bg-editbox border-editboxfocus m-0.5 rounded-sm border p-1 sm:block">
-        {" Şehir : "}
-        <input
-          type="text"
-          value={""}
-          maxLength={150}
-          onChange={(e) => setfullname(e.target.value)}
-          placeholder="Ünvan"
-          className="focus:bg-editboxfocus border-editbox h-full w-50 rounded-sm px-1 outline-0 focus:outline-0"
-        />
-      </div>
-      <div className="bg-editbox border-editboxfocus m-0.5 rounded-sm border p-1 sm:block">
-        <label>Choose or type an option:</label>
-        <input list="items" name="combo" id="combo" />
-        <datalist id="items">
-          <option value="123" />
-          <option value="124" />
-          <option value="135" />
-        </datalist>
-      </div>
+    <div className="flex w-full justify-center">
+      <div className="flex flex-wrap gap-1">
+        <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
+          {" Ticari Ünvanı"}
+          <input
+            type="text"
+            value={fullname}
+            maxLength={150}
+            onChange={(e) => setfullname(e.target.value)}
+            placeholder="Ticari Ünvanı"
+            className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
+          />
+        </div>
+        <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
+          {" Hesap Adı"}
+          <input
+            type="text"
+            value={fullname}
+            maxLength={150}
+            onChange={(e) => setfullname(e.target.value)}
+            placeholder="Hesap adı"
+            className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
+          />
+        </div>
+        <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
+          {" Şehir"}
+          <input
+            type="text"
+            value={""}
+            maxLength={150}
+            onChange={(e) => setfullname(e.target.value)}
+            placeholder="Şehir"
+            className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
+          />
+        </div>
+        <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
+          {" Hesap Grubu"}
+          <input
+            list="items"
+            placeholder="Hesap grubu"
+            className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
+          />
+          <datalist id="items">
+            <option value="123" />
+            <option value="124" />
+            <option value="135" />
+          </datalist>
+        </div>
 
-      <div className="bg-editbox border-editboxfocus m-0.5 rounded-sm border p-1 sm:block">
-        {" Alıcı : "}
-        <input
-          type="checkbox"
-          maxLength={150}
-          onChange={(e) => setfullname(e.target.value)}
-          placeholder="Ünvan"
-          className="focus:bg-editboxfocus border-editbox rounded-sm px-1 outline-0 focus:outline-0"
-        />
+        <div className="bg-editbox border-editboxfocus w-30.5 rounded-sm px-0.5 py-0.5">
+          {" Hesap Tipi "}
+          <select
+            id="items1"
+            className="focus:bg-editboxfocus w-30 rounded-sm px-1 outline-0 focus:outline-0"
+          >
+            <option value="0">Hepsi</option>
+            <option value="1">Alıcı</option>
+            <option value="2">Satıcı</option>
+            <option value="3">Personel</option>
+          </select>
+        </div>
       </div>
-      <div className="bg-editbox border-editboxfocus m-0.5 rounded-sm border p-1 sm:block">
-        {" Satıcı : "}
-        <input
-          type="checkbox"
-          maxLength={150}
-          onChange={(e) => setfullname(e.target.value)}
-          placeholder="Ünvan"
-          className="focus:bg-editboxfocus border-editbox rounded-sm px-1 outline-0 focus:outline-0"
-        />
-      </div>
-      <div className="bg-editbox border-editboxfocus m-0.5 rounded-sm border p-1 sm:block">
-        {" Personel : "}
-        <input
-          type="checkbox"
-          maxLength={150}
-          onChange={(e) => setfullname(e.target.value)}
-          placeholder="Ünvan"
-          className="focus:bg-editboxfocus border-editbox rounded-sm px-1 outline-0 focus:outline-0"
-        />
-      </div>
-      <div className="bg-editbox border-editboxfocus hover:bg-editboxfocus m-0.5 rounded-sm border sm:block">
+      <div className="hover:bg-editbox bg-editboxfocus border-diffcolor mx-1 rounded-md border sm:block">
         <button
           type="button"
-          className="flex h-full w-20 items-center justify-center"
+          className="flex h-full w-25 items-center justify-center"
         >
           <Icons icon="icoList" />
           Listele

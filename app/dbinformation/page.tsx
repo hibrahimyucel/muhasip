@@ -34,9 +34,15 @@ export default function DBInformationPage() {
         {dbtables.map((t, index) => (
           <div key={index} className="flex flex-wrap justify-center">
             <table key={t.Name} className="table-cell rounded-t-md border-t">
+              <caption>{t.Name}</caption>
               <thead>
                 <tr className="border-b">
-                  <th className="p-1">{t.Name}</th>
+                  <td className="px-0.5">Field</td>
+                  <td className="px-0.5">Type</td>
+                  <td className="px-0.5">Key</td>
+                  <td className="px-0.5">Null</td>
+                  <td className="px-0.5">Default</td>
+                  <td className="px-0.5">Extra</td>
                 </tr>
               </thead>
               <tbody>
