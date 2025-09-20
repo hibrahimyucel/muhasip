@@ -3,9 +3,10 @@ Object Relational Mapping Database Tools
 Created : 10.09.2025 İbrahim YÜCEL
 Comment : Base class for all simple CRUD operations on tables&views 
 */
-type sqlOperator = "=" | "LIKE" | ">" | "<";
 
-export async function Query(
+export type sqlOperator = "=" | "LIKE" | ">" | "<";
+
+export async function ORMQuery(
   sql: string,
   params: string[],
   api: string = "/api/db",
@@ -18,6 +19,7 @@ export async function Query(
         data: JSON.stringify({ Sql: sql, Params: params }),
       },
     });
+
     if (res.ok) {
       return await res.json();
     }
@@ -45,24 +47,27 @@ export abstract class TableBase<T> {
        [{ fullname: "1%", email: "q%" }, "="],
      ]);
  */
-  async GetData(whereProps: [Partial<T>, sqlOperator][]): Promise<T[]> {
+
+  async GetData(
+    whereProps: { terms: Partial<T>; condition: sqlOperator }[],
+  ): Promise<T[]> {
     let whereClause: string = "";
     const paramValues: string[] = [];
 
     whereProps.map((whereProp, index) => {
-      const keys = Object.keys(whereProp[0]);
-      const values = Object.values(whereProp[0]);
-      values.map((v) => paramValues.push(v as string));
+      const keys = Object.keys(whereProp.terms);
+      const values = Object.values(whereProp.terms);
+      values.map((v) => paramValues.push(encodeURIComponent(v as string)));
 
       whereClause += index ? "AND " : "";
       whereClause += keys
-        .map((key) => `${key} ${whereProp[1]} ? `)
+        .map((key) => `${key} ${whereProp.condition} ? `)
         .join("AND ");
     });
 
     whereClause = whereClause ? `OR ( ${whereClause}  )` : "";
     const sql = `SELECT * FROM ${this.tableName} WHERE 1=2 ${whereClause}`;
-    return await Query(sql, paramValues);
+    return await ORMQuery(sql, paramValues);
   }
   /*
   async Insert(fields: Partial<T>): Promise<T> {
@@ -139,7 +144,7 @@ export abstract class TableBase<T> {
   }*/
   async findAll(): Promise<T[]> {
     const sql = `SELECT * FROM ${this.tableName}`;
-    console.log(this.apiPath);
+
     try {
       const res = await fetch(this.apiPath, {
         method: "GET",

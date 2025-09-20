@@ -6,7 +6,12 @@ export async function GET(request: NextRequest) {
 
   if (dataStr) {
     const data = JSON.parse(dataStr);
-    const response = await Query(data.Sql, data.Params);
+    const Params = data.Params.map((e: any) => decodeURIComponent(e));
+
+    //console.log(Params);
+
+    const response = await Query(data.Sql, Params);
+
     return NextResponse.json(response, { status: 200 });
   }
 }

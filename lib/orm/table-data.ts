@@ -13,6 +13,10 @@ export interface accountsData {
   tax_id: string;
   taxoffice: string;
   is_person: boolean;
+  is_member: boolean;
+  is_customer: boolean;
+  is_supplier: boolean;
+  group: string;
 }
 export interface usersData {
   id_users: number;
