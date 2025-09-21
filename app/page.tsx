@@ -3,7 +3,7 @@ import HomePageCard from "@/components/homepage/homePageCard";
 export default function HomePage() {
   return (
     <main className="relative flex h-full w-full justify-center overflow-y-scroll">
-      <div className="m-2 flex flex-wrap justify-center gap-2">
+      <div className="flex flex-wrap justify-center gap-2">
         <HomePageCard
           Href="/accounts"
           Name="Accounts"
@@ -17,6 +17,8 @@ export default function HomePage() {
           Name="Developper : Tables"
           Desc=""
         />
+        <HomePageCard Href="/basic" Name="Developper : template" Desc="" />
+        <HomePageCard Href="/basic" Name="Developper : template" Desc="" />
       </div>
     </main>
   );

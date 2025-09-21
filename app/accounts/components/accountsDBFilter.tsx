@@ -86,7 +86,7 @@ export function AccountsDBFilter({ onChange }: AccountsDBFilterProps) {
   }, []);
 
   return (
-    <div className="flex w-full justify-center">
+    <div className="flex w-full">
       <div className="flex flex-wrap gap-1">
         <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
           {" Ticari Ünvanı"}

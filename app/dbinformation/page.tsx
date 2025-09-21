@@ -6,6 +6,23 @@ import { TableData } from "@/lib/db/db";
 export default function DBInformationPage() {
   const [dbtables, setdbtables] = useState<TableData[]>([]);
 
+  async function generateData(data: TableData[]) {
+    let s = "{";
+    data.map((t) => {
+      s += t.Name + ":{";
+      /** data.map */
+      t.fields?.map((f) => {
+        s += f.Field + ":{";
+        s += `name : "${f.Field}",caption : "${f.Field}", maxlength : ${f.Type?.split("(")[1].split(")")[0]} `;
+        s += "},";
+      });
+      /** data.map */
+      s += "},";
+    });
+    s += "}";
+
+    console.log(s);
+  }
   async function getTables() {
     const res = await fetch("/api/dbschema", {
       method: "GET",
@@ -15,6 +32,7 @@ export default function DBInformationPage() {
     });
     if (res.ok) {
       const response = await res.json();
+      generateData(response as TableData[]);
 
       setdbtables(response);
     }

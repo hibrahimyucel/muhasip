@@ -32,7 +32,7 @@ export default function RootLayout({
         >
           <div className="h-[calc(100vh-3rem)] w-[calc(100vw-0.1rem)] place-self-center-safe overscroll-none">
             <div className="h-12 w-full">
-              <Suspense>
+              <Suspense fallback={"Loading"}>
                 <Navbar />
               </Suspense>
             </div>

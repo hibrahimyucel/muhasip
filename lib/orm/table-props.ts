@@ -1,0 +1,28 @@
+export const TableProps = {
+  accounts: {
+    id_accounts: { name: "id_accounts", caption: "Sıra No", maxlength: 11 },
+    fullname: { name: "fullname", caption: "Ticari Ünvanı", maxlength: 100 },
+    contactname: { name: "contactname", caption: "İletişim", maxlength: 50 },
+    adress: { name: "adress", caption: "Adres", maxlength: 150 },
+    city: { name: "city", caption: "Şehir", maxlength: 20 },
+    country: { name: "country", caption: "Ülke", maxlength: 20 },
+    postalcode: { name: "postalcode", caption: "Posta Kodu", maxlength: 20 },
+    email: { name: "email", caption: "e-Posta", maxlength: 50 },
+    phone: { name: "phone", caption: "Telefon", maxlength: 50 },
+    mersis_id: { name: "mersis_id", caption: "MERSIS No", maxlength: 16 },
+    tc_id: { name: "tc_id", caption: "TC Kimlik No", maxlength: 11 },
+    tax_id: { name: "tax_id", caption: "Vergi No", maxlength: 10 },
+    taxoffice: { name: "taxoffice", caption: "Vergi Dairesi", maxlength: 30 },
+    is_person: { name: "is_person", caption: "Özel Kişi", maxlength: 1 },
+    is_member: { name: "is_member", caption: "Personel", maxlength: 1 },
+    is_customer: { name: "is_customer", caption: "Alıcı", maxlength: 1 },
+    is_supplier: { name: "is_supplier", caption: "Satıcı", maxlength: 1 },
+    group: { name: "group", caption: "Grup", maxlength: 50 },
+  },
+  users: {
+    id_users: { name: "id_users", caption: "id_users", maxlength: 11 },
+    email: { name: "email", caption: "email", maxlength: 100 },
+    fullname: { name: "fullname", caption: "fullname", maxlength: 100 },
+    idClerk: { name: "idClerk", caption: "idClerk", maxlength: 100 },
+  },
+};
