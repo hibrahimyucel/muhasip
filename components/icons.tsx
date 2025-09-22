@@ -12,47 +12,57 @@ import {
   FiLogOut,
   FiLogIn,
   FiCircle,
+  FiCheckSquare,
+  FiSquare,
 } from "react-icons/fi";
 
-export type Ico =
-  | "icoSortA"
-  | "icoSortD"
-  | "icoList"
-  | "icoFilter"
-  | "icoOk"
-  | "icoCancel"
-  | "icoRemove"
-  | "icoAdd"
-  | "icoLogOut"
-  | "icoLogIn"
-  | "icoCircle";
+export enum Ico {
+  icoSortA,
+  icoSortD,
+  icoList,
+  icoFilter,
+  icoOk,
+  icoCancel,
+  icoRemove,
+  icoAdd,
+  icoLogOut,
+  icoLogIn,
+  icoCircle,
+  icoChecked,
+  icoCheckedX,
+}
 
 export default function Icons({ icon }: { icon: Ico }) {
   switch (icon) {
-    case "icoSortA":
-      return <FiArrowDown className="text-green-400" />;
-    case "icoSortD":
-      return <FiArrowUp className="text-red-400" />;
-    case "icoList":
+    case Ico.icoSortA:
+      return <FiArrowDown className="text-2xl text-green-400" />;
+    case Ico.icoSortD:
+      return <FiArrowUp className="text-2xl text-red-400" />;
+    case Ico.icoList:
       return <FiList className="text-2xl text-blue-600" />;
-    case "icoFilter":
-      return <FiFilter />;
+    case Ico.icoFilter:
+      return <FiFilter className="text-2xl" />;
 
-    case "icoOk":
-      return <FiCheckCircle className="text-green-700" />;
-    case "icoCancel":
-      return <FiXCircle className="text-red-600" />;
+    case Ico.icoOk:
+      return <FiCheckCircle className="text-2xl text-green-700" />;
+    case Ico.icoCancel:
+      return <FiXCircle className="text-2xl text-red-600" />;
 
-    case "icoRemove":
-      return <FiMinusCircle className="text-red-600" />;
-    case "icoAdd":
-      return <FiPlusCircle className="text-blue-700" />;
-    case "icoLogOut":
+    case Ico.icoRemove:
+      return <FiMinusCircle className="text-2xl text-red-600" />;
+    case Ico.icoAdd:
+      return <FiPlusCircle className="text-2xl text-blue-700" />;
+    case Ico.icoLogOut:
       return <FiLogOut />;
-    case "icoLogIn":
+    case Ico.icoLogIn:
       return <FiLogIn />;
-    case "icoCircle":
+    case Ico.icoCircle:
       return <FiCircle className="opacity-25" />;
+
+    case Ico.icoChecked:
+      return <FiCheckSquare className="text-2xl" />;
+    case Ico.icoCheckedX:
+      return <FiSquare className="text-2xl text-gray-500" />;
     default:
       return null;
   }

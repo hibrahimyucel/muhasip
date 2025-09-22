@@ -30,15 +30,11 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <div className="h-[calc(100vh-3rem)] w-[calc(100vw-0.1rem)] place-self-center-safe overscroll-none">
-            <div className="h-12 w-full">
-              <Suspense fallback={"Loading"}>
-                <Navbar />
-              </Suspense>
-            </div>
-            <div className="h-[calc(100vh-4rem)] w-full justify-center">
-              {children}
-            </div>
+          <div className="h-12 w-full flex-col justify-center">
+            <Suspense fallback={"Loading"}>
+              <Navbar />
+            </Suspense>
+            <div className="flex w-full justify-center">{children}</div>
           </div>
         </body>
       </html>

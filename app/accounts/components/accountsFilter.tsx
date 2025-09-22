@@ -1,5 +1,5 @@
 import React from "react";
-import Icons from "@/components/icons";
+import Icons, { Ico } from "@/components/icons";
 import { TableProps } from "@/lib/orm/table-props";
 export default function AccountsFilter() {
   const inf = TableProps.accounts;
@@ -9,7 +9,7 @@ export default function AccountsFilter() {
         <button className="right-0 flex h-7 w-65">
           <h2 className="flex w-full justify-center">{inf.fullname.caption}</h2>
           <div className="right-0 pr-1 text-2xl">
-            <Icons icon="icoList" />
+            <Icons icon={Ico.icoList} />
           </div>
         </button>
         <input
@@ -25,7 +25,7 @@ export default function AccountsFilter() {
             {inf.contactname.caption}
           </h2>
           <div className="right-0 pr-1 text-2xl">
-            <Icons icon="icoList" />
+            <Icons icon={Ico.icoList} />
           </div>
         </button>
         <input
@@ -40,7 +40,7 @@ export default function AccountsFilter() {
         <button className="right-0 flex h-7 w-80">
           <h2 className="flex w-full justify-center">{inf.adress.caption}</h2>
           <div className="right-0 pr-1 text-2xl">
-            <Icons icon="icoList" />
+            <Icons icon={Ico.icoList} />
           </div>
         </button>
         <input
@@ -54,7 +54,7 @@ export default function AccountsFilter() {
         <button className="right-0 flex h-7 w-40">
           <h2 className="flex w-full justify-center">{inf.city.caption}</h2>
           <div className="right-0 pr-1 text-2xl">
-            <Icons icon="icoList" />
+            <Icons icon={Ico.icoList} />
           </div>
         </button>
         <input
@@ -68,7 +68,7 @@ export default function AccountsFilter() {
         <button className="right-0 flex h-7 w-65">
           <h2 className="flex w-full justify-center">{inf.email.caption}</h2>
           <div className="right-0 pr-1 text-2xl">
-            <Icons icon="icoList" />
+            <Icons icon={Ico.icoList} />
           </div>
         </button>
         <input

@@ -13,7 +13,7 @@ export const TableProps = {
     tc_id: { name: "tc_id", caption: "TC Kimlik No", maxlength: 11 },
     tax_id: { name: "tax_id", caption: "Vergi No", maxlength: 10 },
     taxoffice: { name: "taxoffice", caption: "Vergi Dairesi", maxlength: 30 },
-    is_person: { name: "is_person", caption: "Özel Kişi", maxlength: 1 },
+    is_person: { name: "is_person", caption: "Gerçek Kişi", maxlength: 1 },
     is_member: { name: "is_member", caption: "Personel", maxlength: 1 },
     is_customer: { name: "is_customer", caption: "Alıcı", maxlength: 1 },
     is_supplier: { name: "is_supplier", caption: "Satıcı", maxlength: 1 },

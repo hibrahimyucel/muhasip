@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from "@/lib/hooks/Debounce";
-import Icons from "@/components/icons";
+import Icons, { Ico } from "@/components/icons";
 import { accountsData } from "@/lib/orm/table-data";
 import { sqlOperator } from "@/lib/orm/orm-base";
 import { Table } from "@/lib/orm/table";
+import { TableProps } from "@/lib/orm/table-props";
 export type accountsFilter = {
   fullname?: string;
   contactname?: string;
@@ -24,10 +25,35 @@ export type accountsFilter = {
 };
 type AccountsDBFilterProps = {
   onChange: (data: accountsData[]) => void;
+  onAdd: () => void;
 };
 
-export function AccountsDBFilter({ onChange }: AccountsDBFilterProps) {
-  const [accFilters, setaccFilters] = useState<accountsFilter>({});
+function initAccountData() {
+  const ad: accountsData = {
+    id_accounts: 0,
+    fullname: "",
+    contactname: "",
+    adress: "",
+    city: "",
+    country: "",
+    postalcode: "",
+    email: "",
+    phone: "",
+    mersis_id: "",
+    tc_id: "",
+    tax_id: "",
+    taxoffice: "",
+    is_person: false,
+    is_member: false,
+    is_customer: false,
+    is_supplier: false,
+    group: "",
+  };
+  return ad;
+}
+
+export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
+  const [accFilters, setaccFilters] = useState<accountsData>(initAccountData);
   const debouncedfullname = useDebounce(accFilters);
 
   async function getData() {
@@ -86,61 +112,60 @@ export function AccountsDBFilter({ onChange }: AccountsDBFilterProps) {
   }, []);
 
   return (
-    <div className="flex w-full">
+    <div className="flex w-full justify-start pb-1 sm:justify-center">
       <div className="flex flex-wrap gap-1">
-        <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
-          {" Ticari Ünvanı"}
+        <div className="bg-editbox border-editboxfocus w-59.5 rounded-sm px-0.5 py-0.5">
+          {TableProps.accounts.fullname.caption}
           <input
             type="text"
-            name="fullname"
+            name={TableProps.accounts.fullname.name}
             defaultValue={accFilters.fullname}
             maxLength={100}
             onChange={(e) =>
               setaccFilters({ ...accFilters, fullname: e.target.value })
             }
-            placeholder="Ticari Ünvanı"
-            className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
+            placeholder={TableProps.accounts.fullname.caption}
+            className="focus:bg-editboxfocus w-59 rounded-sm px-1 outline-0 focus:outline-0"
           />
         </div>
         <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
-          {" Hesap Adı"}
+          {TableProps.accounts.contactname.caption}
           <input
             type="text"
-            name="contactname"
+            name={TableProps.accounts.contactname.name}
             defaultValue={accFilters.contactname}
             maxLength={50}
             onChange={(e) =>
               setaccFilters({ ...accFilters, contactname: e.target.value })
             }
-            placeholder="Hesap adı"
+            placeholder={TableProps.accounts.contactname.caption}
             className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
           />
         </div>
         <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
-          {" Şehir"}
+          {TableProps.accounts.city.caption}
           <input
             type="text"
-            name="city"
+            name={TableProps.accounts.city.name}
             defaultValue={accFilters.city}
             maxLength={20}
             onChange={(e) =>
               setaccFilters({ ...accFilters, city: e.target.value })
             }
-            placeholder="Şehir"
+            placeholder={TableProps.accounts.city.caption}
             className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
           />
         </div>
         <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
-          {" Hesap Grubu"}
+          {TableProps.accounts.group.caption}
           <input
             list="items"
-            name="group"
-            // value={accFilters.group}
+            name={TableProps.accounts.group.name}
             maxLength={50}
             onChange={(e) =>
               setaccFilters({ ...accFilters, group: e.target.value })
             }
-            placeholder="Hesap grubu"
+            placeholder={TableProps.accounts.group.caption}
             className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
           />
           <datalist id="items">
@@ -154,9 +179,7 @@ export function AccountsDBFilter({ onChange }: AccountsDBFilterProps) {
           {" Hesap Tipi "}
           <select
             id="items1"
-            name="group"
-            //value={accFilters.group}
-
+            name="tip"
             onChange={(e) => {
               switch (e.target.value) {
                 case "1":
@@ -198,14 +221,22 @@ export function AccountsDBFilter({ onChange }: AccountsDBFilterProps) {
           </select>
         </div>
       </div>
-      <div className="hover:bg-editbox bg-editboxfocus border-diffcolor mx-1 rounded-md border sm:block">
+      <div className="hover:bg-editbox bg-editboxfocus border-diffcolor rounded-md border sm:block">
         <button
           type="button"
-          className="flex h-full w-25 items-center justify-center"
+          className="flex h-full w-12 items-center justify-center"
           onClick={getData}
         >
-          <Icons icon="icoList" />
-          Listele
+          <Icons icon={Ico.icoList} />
+        </button>
+      </div>
+      <div className="hover:bg-editbox bg-editboxfocus border-diffcolor rounded-md border sm:block">
+        <button
+          type="button"
+          className="flex h-full w-12 items-center justify-center"
+          onClick={() => onAdd()}
+        >
+          <Icons icon={Ico.icoAdd} />
         </button>
       </div>
     </div>
