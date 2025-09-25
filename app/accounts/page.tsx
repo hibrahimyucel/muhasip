@@ -4,30 +4,23 @@ import AccountsDBFilter from "./components/accountsDBFilter";
 import AccountsFilter from "./components/accountsFilter";
 import { accountsData } from "@/lib/orm/table-data";
 import AccountsEdit from "./components/accountsEdit";
+import Icons, { Ico } from "@/components/icons";
 
 export default function AccountsPage() {
   const [Accounts, setAccounts] = useState<accountsData[]>([]);
-  const [isEditing, setisEditing] = useState(false);
-  let RecordId: number = -1;
-  function AddRecord() {
-    console.log(isEditing);
-    if (isEditing) {
-      RecordId = -1;
-      setisEditing(false);
-    } else {
-      RecordId = 0;
-      setisEditing(true);
-    }
+  const [RecordId, setRecordId] = useState(0);
+
+  function EditRecord(value: number = 0) {
+    setRecordId(value);
   }
-  function EditRecord(value: number) {
-    RecordId = value;
-    setisEditing(true);
+  function AddRecord(value: number = -1) {
+    setRecordId(value);
   }
-  useEffect(() => {}, [Accounts, isEditing]);
+  useEffect(() => {}, []);
   return (
     <div className="flex h-full flex-col justify-start px-1 sm:justify-center">
-      {isEditing ? (
-        <AccountsEdit RecordId={RecordId} onAdd={AddRecord} />
+      {RecordId ? (
+        <AccountsEdit RecordId={RecordId} onAdd={EditRecord} />
       ) : (
         <>
           <AccountsDBFilter onChange={setAccounts} onAdd={AddRecord} />
@@ -42,20 +35,33 @@ export default function AccountsPage() {
                     : "bg-diffcolor flex w-302 gap-0.5"
                 }
               >
-                <div className="flex w-65 justify-start px-1">
+                <div className="flex w-65 justify-start truncate px-1">
                   <p>{data.fullname}</p>
                 </div>
-                <div className="flex w-50 justify-start px-1">
+                <div className="flex w-50 justify-start truncate px-1">
                   <p>{data.contactname}</p>
                 </div>
-                <div className="flex w-80 justify-start px-1">
+                <div className="flex w-80 justify-start truncate px-1">
                   <p>{data.adress}</p>
                 </div>
-                <div className="flex w-40 justify-start px-1">
+                <div className="flex w-40 justify-start truncate px-1">
                   <p>{data.city}</p>
                 </div>
-                <div className="flex w-65 justify-start px-1">
+                <div className="flex w-50.5 justify-start truncate px-1">
                   <p>{data.email}</p>
+                </div>
+                <div className="flex w-7 justify-start truncate px-1">
+                  <button
+                    className="cursor-pointer"
+                    onClick={() => EditRecord(data.id_accounts)}
+                  >
+                    <Icons icon={Ico.icoList} />
+                  </button>
+                </div>
+                <div className="flex w-7 justify-start truncate px-1">
+                  <button className="cursor-pointer">
+                    <Icons icon={Ico.icoDeleteRow} />
+                  </button>
                 </div>
               </div>
             ))}

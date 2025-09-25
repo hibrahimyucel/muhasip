@@ -29,7 +29,9 @@ type AccountsDBFilterProps = {
 };
 
 function initAccountData() {
-  const ad: accountsData = {
+  const ad: Partial<accountsData> = {
+    //id_accounts: 0,
+    fullname: "" /*
     id_accounts: 0,
     fullname: "",
     contactname: "",
@@ -42,18 +44,18 @@ function initAccountData() {
     mersis_id: "",
     tc_id: "",
     tax_id: "",
-    taxoffice: "",
+    taxoffice: "",*/,
     is_person: false,
     is_member: false,
     is_customer: false,
     is_supplier: false,
-    group: "",
   };
   return ad;
 }
 
 export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
-  const [accFilters, setaccFilters] = useState<accountsData>(initAccountData);
+  const [accFilters, setaccFilters] =
+    useState<Partial<accountsData>>(initAccountData);
   const debouncedfullname = useDebounce(accFilters);
 
   async function getData() {
@@ -81,9 +83,9 @@ export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
           terms: { city: accFilters.city.trim().concat("%") },
           condition: "LIKE",
         });
-      if (accFilters.group)
+      if (accFilters.acc_group)
         whereProps.push({
-          terms: { group: accFilters.group.trim() },
+          terms: { acc_group: accFilters.acc_group.trim() },
           condition: "LIKE",
         });
       if (accFilters.is_customer)
@@ -163,7 +165,7 @@ export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
             name={TableProps.accounts.group.name}
             maxLength={50}
             onChange={(e) =>
-              setaccFilters({ ...accFilters, group: e.target.value })
+              setaccFilters({ ...accFilters, acc_group: e.target.value })
             }
             placeholder={TableProps.accounts.group.caption}
             className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"

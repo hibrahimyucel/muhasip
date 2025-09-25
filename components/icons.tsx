@@ -14,6 +14,7 @@ import {
   FiCircle,
   FiCheckSquare,
   FiSquare,
+  FiDelete,
 } from "react-icons/fi";
 
 export enum Ico {
@@ -30,6 +31,7 @@ export enum Ico {
   icoCircle,
   icoChecked,
   icoCheckedX,
+  icoDeleteRow,
 }
 
 export default function Icons({ icon }: { icon: Ico }) {
@@ -63,6 +65,8 @@ export default function Icons({ icon }: { icon: Ico }) {
       return <FiCheckSquare className="text-2xl" />;
     case Ico.icoCheckedX:
       return <FiSquare className="text-2xl text-gray-500" />;
+    case Ico.icoDeleteRow:
+      return <FiDelete className="text-2xl" />;
     default:
       return null;
   }

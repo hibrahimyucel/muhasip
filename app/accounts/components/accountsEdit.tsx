@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { accountsData } from "@/lib/orm/table-data";
 import { Table } from "@/lib/orm/table";
 import { TableProps } from "@/lib/orm/table-props";
 import Icons, { Ico } from "@/components/icons";
+import { useDebounce } from "@/lib/hooks/Debounce";
 
 type accountsEditProps = {
   RecordId: number;
@@ -10,10 +11,10 @@ type accountsEditProps = {
 };
 
 function initAccountData() {
-  const ad: accountsData = {
-    id_accounts: 0,
+  const ad: Partial<accountsData> = {
+    //id_accounts: 0,
     fullname: "",
-    contactname: "",
+    /*contactname: "",
     adress: "",
     city: "",
     country: "",
@@ -28,14 +29,30 @@ function initAccountData() {
     is_member: false,
     is_customer: false,
     is_supplier: false,
-    group: "",
+    group: "",*/
   };
   return ad;
 }
 
 export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
   const [data, setData] = useState(initAccountData);
+  const debouncedfullname = useDebounce(data);
+  console.log(RecordId);
   const aInf = TableProps.accounts;
+  async function getData() {
+    const d: accountsData[] = await Table.accounts.GetbyID(RecordId);
+    setData(d[0]);
+  }
+  async function SaveData() {
+    console.log(data);
+    if (RecordId === -1) Table.accounts.Insert(data);
+    else Table.accounts.update(RecordId, data);
+    onAdd();
+  }
+
+  useEffect(() => {
+    if (RecordId > 0) getData();
+  }, []);
   return (
     <div>
       <div className="flex flex-wrap justify-center gap-1">
@@ -73,7 +90,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
               list="items"
               name={aInf.group.name}
               maxLength={aInf.group.maxlength}
-              onChange={(e) => setData({ ...data, group: e.target.value })}
+              onChange={(e) => setData({ ...data, acc_group: e.target.value })}
               placeholder={aInf.group.caption}
               className="focus:bg-editboxfocus w-full rounded-sm px-1 outline-0 focus:outline-0"
             />
@@ -269,6 +286,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
           <button
             type="button"
             className="flex h-10 w-25 items-center justify-center gap-2"
+            onClick={() => SaveData()}
           >
             Kaydet
             <Icons icon={Ico.icoOk} />

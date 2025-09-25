@@ -6,9 +6,9 @@ export async function GET(request: NextRequest) {
 
   if (dataStr) {
     const data = JSON.parse(dataStr);
-    const Params = data.Params.map((e: any) => decodeURIComponent(e));
-
-    //console.log(Params);
+    const Params = data.Params.map((e: unknown) =>
+      typeof e === "string" ? decodeURIComponent(e) : e,
+    );
 
     const response = await Query(data.Sql, Params);
 
@@ -21,6 +21,7 @@ export async function POST(request: NextRequest) {
 
   if (dataStr) {
     const data = JSON.parse(dataStr);
+    // const Params = data.Params.map((e: any) => (e == "null" ? null : e));
     const response = await ExecQuery(data.Sql, data.Params);
     return NextResponse.json(response, { status: 200 });
   }

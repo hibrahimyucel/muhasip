@@ -38,7 +38,7 @@ export default function DBInformationPage() {
     }
   }
   useEffect(() => {
-    getTables();
+    /*getTables();*/
   }, []);
   return (
     <div className="justify-self-center-safe">

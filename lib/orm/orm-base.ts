@@ -8,7 +8,7 @@ export type sqlOperator = "=" | "LIKE" | ">" | "<";
 
 export async function ORMQuery(
   sql: string,
-  params: string[],
+  params: unknown[],
   api: string = "/api/db",
 ): Promise<[]> {
   try {
@@ -69,52 +69,62 @@ export abstract class TableBase<T> {
     const sql = `SELECT * FROM ${this.tableName} WHERE 1=2 ${whereClause}`;
     return await ORMQuery(sql, paramValues);
   }
-  /*
+  async GetbyID(RecordId: number): Promise<T[]> {
+    const sql = `SELECT * FROM ${this.tableName} WHERE ${this.idField} = ?`;
+    return await ORMQuery(sql, [RecordId.toString()]);
+  }
+
   async Insert(fields: Partial<T>): Promise<T> {
     const keys = Object.keys(fields);
     const values = Object.values(fields);
-    const placeholders = keys.map((_, index) => `$${index + 1}`).join(", ");
+    const paramValues: string[] = [];
+    values.map((v) => paramValues.push(v as string));
+    const placeholders = keys.map(() => ` ?`).join(", ");
     const keysString = keys.join(", ");
 
-    const sql = `
-      INSERT INTO ${this.tableName}
-      (${keysString}) VALUES (${placeholders})
-      RETURNING *;`;
+    const sql = `INSERT INTO ${this.tableName} (${keysString}) VALUES (${placeholders}) RETURNING *;`;
 
     try {
-      const results = await (await getConn()).execute(sql, values);
-      return snakeToCamel(results) as T;
-    } catch (error: any) {
-      throw new Error(`Failed to save record: ${error.message}`);
+      const results = await ORMQuery(sql, paramValues);
+      return results as T;
+    } catch (error) {
+      throw new Error(`Failed to save record: ${(error as Error).message}`);
     }
   }
 
-  async update(id: IDType, fields: Partial<T>): Promise<void> {
-    const keys = Object.keys(camelToSnake(fields));
+  async update(id: number, fields: Partial<T>): Promise<void> {
+    const keys = Object.keys(fields);
     const values = Object.values(fields);
+    keys.shift();
+    values.shift();
 
+    const paramValues: unknown[] = [];
+    values.map((v) => {
+      if (v == null) {
+        paramValues.push(null);
+      } else if (v == true) {
+        paramValues.push(1);
+      } else if (v == false) {
+        paramValues.push(0);
+      } else paramValues.push(encodeURIComponent(v as string));
+    });
     if (keys.length === 0) {
       throw new Error("No fields to update.");
     }
+    console.log(paramValues);
 
-    const idIndex = keys.length + 1;
-    const setClause = keys
-      .map((key, index) => `${key} = $${index + 1}`)
-      .join(", ");
+    const setClause = keys.map((key) => `${key} = ?`).join(", ");
 
-    const sql = `
-      UPDATE ${this.tableName}
-      SET ${setClause}
-      WHERE ${this.idField} = $${idIndex}
-    `;
+    const sql = `UPDATE ${this.tableName} SET ${setClause} WHERE ${this.idField} = ?`;
 
     try {
-      await (await getConn()).query(sql, [...values, id]);
+      await ORMQuery(sql, [...paramValues, id]);
       return undefined;
-    } catch (error: any) {
-      throw new Error(`Failed to update record: ${error.message}`);
+    } catch (error) {
+      throw new Error(`Failed to update record: ${(error as Error).message}`);
     }
   }
+  /*
   async delete(id: IDType): Promise<void> {
     const sql = `
       DELETE FROM ${this.tableName}

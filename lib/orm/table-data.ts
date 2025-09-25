@@ -16,7 +16,7 @@ export interface accountsData {
   is_member: boolean;
   is_customer: boolean;
   is_supplier: boolean;
-  group: string;
+  acc_group: string;
 }
 export interface usersData {
   id_users: number;
