@@ -7,7 +7,7 @@ export default function UsersPage() {
   const [users, setusers] = useState<usersData[]>([]);
 
   async function getUsers() {
-    const usr = await Table.users.GetData([
+    const usr = await Table.users.getData([
       { terms: { id_users: 0 }, condition: ">" },
     ]);
     setusers(usr);
@@ -44,7 +44,7 @@ export default function UsersPage() {
                   <tr key={index} className="border-t">
                     <td className="border-r px-0.5">{index + 1}</td>
                     <td className="border-r px-0.5">{u.fullname}</td>
-                    <td className="px-0.5">{u.email}</td>
+                    <td className="px-0.5">{u.idClerk}</td>
                   </tr>
                 );
               })}

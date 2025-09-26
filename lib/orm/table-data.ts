@@ -23,4 +23,5 @@ export interface usersData {
   email: string;
   fullname: string;
   idClerk: string;
+  id_accounts?: number;
 }

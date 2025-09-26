@@ -105,7 +105,7 @@ export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
           condition: "=",
         });
     }
-    const value = await Table.accounts.GetData(whereProps);
+    const value = await Table.accounts.getData(whereProps);
     onChange(value);
   }
 

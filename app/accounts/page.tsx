@@ -5,6 +5,7 @@ import AccountsFilter from "./components/accountsFilter";
 import { accountsData } from "@/lib/orm/table-data";
 import AccountsEdit from "./components/accountsEdit";
 import Icons, { Ico } from "@/components/icons";
+import { Table } from "@/lib/orm/table";
 
 export default function AccountsPage() {
   const [Accounts, setAccounts] = useState<accountsData[]>([]);
@@ -15,6 +16,11 @@ export default function AccountsPage() {
   }
   function AddRecord(value: number = -1) {
     setRecordId(value);
+  }
+  function DeleteRecord(id: number, fullname: string) {
+    const result = confirm(`${fullname} 
+      adlı hesabı silmek istiyor musunuz.`);
+    Table.accounts.delete(id);
   }
   useEffect(() => {}, []);
   return (
@@ -59,7 +65,12 @@ export default function AccountsPage() {
                   </button>
                 </div>
                 <div className="flex w-7 justify-start truncate px-1">
-                  <button className="cursor-pointer">
+                  <button
+                    className="cursor-pointer"
+                    onClick={() =>
+                      DeleteRecord(data.id_accounts, data.fullname)
+                    }
+                  >
                     <Icons icon={Ico.icoDeleteRow} />
                   </button>
                 </div>

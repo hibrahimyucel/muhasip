@@ -48,7 +48,7 @@ export abstract class TableBase<T> {
      ]);
  */
 
-  async GetData(
+  async getData(
     whereProps: { terms: Partial<T>; condition: sqlOperator }[],
   ): Promise<T[]> {
     let whereClause: string = "";
@@ -69,16 +69,25 @@ export abstract class TableBase<T> {
     const sql = `SELECT * FROM ${this.tableName} WHERE 1=2 ${whereClause}`;
     return await ORMQuery(sql, paramValues);
   }
-  async GetbyID(RecordId: number): Promise<T[]> {
+  async getbyID(RecordId: number): Promise<T[]> {
     const sql = `SELECT * FROM ${this.tableName} WHERE ${this.idField} = ?`;
     return await ORMQuery(sql, [RecordId.toString()]);
   }
 
-  async Insert(fields: Partial<T>): Promise<T> {
+  async insert(fields: Partial<T>): Promise<T> {
     const keys = Object.keys(fields);
     const values = Object.values(fields);
-    const paramValues: string[] = [];
-    values.map((v) => paramValues.push(v as string));
+
+    const paramValues: unknown[] = [];
+    values.map((v) => {
+      if (v == null) {
+        paramValues.push(null);
+      } else if (v == true) {
+        paramValues.push(1);
+      } else if (v == false) {
+        paramValues.push(0);
+      } else paramValues.push(encodeURIComponent(v as string));
+    });
     const placeholders = keys.map(() => ` ?`).join(", ");
     const keysString = keys.join(", ");
 
@@ -124,35 +133,19 @@ export abstract class TableBase<T> {
       throw new Error(`Failed to update record: ${(error as Error).message}`);
     }
   }
-  /*
-  async delete(id: IDType): Promise<void> {
-    const sql = `
-      DELETE FROM ${this.tableName}
-      WHERE ${this.idField} = $1
-    `;
+
+  async delete(id: number): Promise<void> {
+    const sql = `DELETE FROM ${this.tableName} WHERE ${this.idField} = ?`;
 
     try {
-      await (await getConn()).execute(sql, [id]);
+      await ORMQuery(sql, [id]);
       return;
-    } catch (error: any) {
-      throw new Error(`Failed to delete record: ${error.message}`);
+    } catch (error) {
+      throw new Error(`Failed to delete record: ${(error as Error).message}`);
     }
   }
-  async findFirst(id: IDType): Promise<T | null> {
-    const sql = `
-      SELECT * FROM ${this.tableName}
-      WHERE ${this.idField} = $1
-      LIMIT 1
-    `;
 
-    try {
-      const [fields, results] = await (await getConn()).query(sql, [id]);
-      return (snakeToCamel(results[0]) as T) || null;
-    } catch (error: any) {
-      throw new Error(`Failed to retrieve record: ${error.message}`);
-    }
-  }*/
-  async findAll(): Promise<T[]> {
+  async getAll(): Promise<T[]> {
     const sql = `SELECT * FROM ${this.tableName}`;
 
     try {
@@ -174,6 +167,7 @@ export abstract class TableBase<T> {
 
     return [];
   }
+
   /*
   async findAllWhere<K extends keyof T>(key: K, value: T[K]): Promise<T[]> {
     const sql = `

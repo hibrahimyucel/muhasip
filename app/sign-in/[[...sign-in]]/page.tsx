@@ -2,10 +2,12 @@ import { SignIn } from "@clerk/nextjs";
 import Link from "next/link";
 export default function Page() {
   return (
-    <div className="flex-row justify-center bg-black text-3xl text-amber-200 p-1.5 rounded-3xl m-2">
-      <div className="flex justify-center w-auto">
-        <Link href="/">Anasayfa</Link>
-      </div>
+    <div className="flex-row justify-center gap-3 rounded-3xl">
+      <Link href="/">
+        <div className="bg-editboxfocus mt-2 mb-2 flex w-full justify-center rounded-md text-3xl">
+          Anasayfa
+        </div>
+      </Link>
       <div className="flex justify-center">
         <SignIn />
       </div>

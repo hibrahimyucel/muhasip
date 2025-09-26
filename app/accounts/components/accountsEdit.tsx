@@ -40,12 +40,12 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
   console.log(RecordId);
   const aInf = TableProps.accounts;
   async function getData() {
-    const d: accountsData[] = await Table.accounts.GetbyID(RecordId);
+    const d: accountsData[] = await Table.accounts.getbyID(RecordId);
     setData(d[0]);
   }
   async function SaveData() {
     console.log(data);
-    if (RecordId === -1) Table.accounts.Insert(data);
+    if (RecordId === -1) Table.accounts.insert(data);
     else Table.accounts.update(RecordId, data);
     onAdd();
   }

@@ -14,7 +14,7 @@ export interface TableData {
 }
 export const db = mysql.createPool(`${process.env.MYSQL_DATABASE_URL}`);
 
-export async function Query(sql: string, values: string[]) {
+export async function Query(sql: string, values: unknown[]) {
   const conn = await db.getConnection();
   try {
     const [results] = await conn.query(sql, values);
@@ -28,7 +28,7 @@ export async function Query(sql: string, values: string[]) {
   }
 }
 
-export async function ExecQuery(sql: string, values: string[]) {
+export async function ExecQuery(sql: string, values: unknown[]) {
   /** 
   ResultSetHeader {
   fieldCount: 0,
