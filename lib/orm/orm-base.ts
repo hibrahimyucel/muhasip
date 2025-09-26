@@ -91,7 +91,7 @@ export abstract class TableBase<T> {
     const placeholders = keys.map(() => ` ?`).join(", ");
     const keysString = keys.join(", ");
 
-    const sql = `INSERT INTO ${this.tableName} (${keysString}) VALUES (${placeholders}) RETURNING *;`;
+    const sql = `INSERT INTO ${this.tableName} (${keysString}) VALUES (${placeholders})`;
 
     try {
       const results = await ORMQuery(sql, paramValues);
