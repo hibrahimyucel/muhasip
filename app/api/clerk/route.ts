@@ -1,4 +1,3 @@
-import { Table } from "@/lib/orm/table";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { NextRequest } from "next/server";
 import { usersData } from "@/lib/orm/table-data";

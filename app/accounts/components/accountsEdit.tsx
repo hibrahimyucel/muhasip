@@ -11,32 +11,8 @@ type accountsEditProps = {
   onAdd: () => void;
 };
 
-function initAccountData() {
-  const ad: Partial<accountsData> = {
-    //id_accounts: 0,
-    fullname: "",
-    /*contactname: "",
-    adress: "",
-    city: "",
-    country: "",
-    postalcode: "",
-    email: "",
-    phone: "",
-    mersis_id: "",
-    tc_id: "",
-    tax_id: "",
-    taxoffice: "",
-    is_person: false,
-    is_member: false,
-    is_customer: false,
-    is_supplier: false,
-    group: "",*/
-  };
-  return ad;
-}
-
 export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
-  const [data, setData] = useState(initAccountData);
+  const [data, setData] = useState<Partial<accountsData>>({});
   const debouncedfullname = useDebounce(data);
 
   const aInf = TableProps.accounts;
@@ -45,9 +21,13 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
     setData(d[0]);
   }
   async function SaveData() {
-    if (RecordId === -1) Table.accounts.insert(data);
-    else Table.accounts.update(RecordId, data);
-    onAdd();
+    try {
+      if (RecordId === -1) Table.accounts.insert(data);
+      else Table.accounts.update(RecordId, data);
+      onAdd();
+    } catch {
+      return;
+    }
   }
 
   useEffect(() => {
@@ -142,7 +122,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
                 setData({ ...data, is_supplier: !data.is_supplier })
               }
             >
-              <Icons icon={data.is_supplier ? "Checked" : "CheckedX"} />
+              <CheckIcon Checked={data.is_supplier} />
               {aInf.is_supplier.caption}
             </button>
           </div>
@@ -277,7 +257,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
         </div>
       </div>
 
-      <div className="grid h-10 w-60 grid-cols-2 gap-2 place-self-end-safe p-3">
+      <div className="grid h-10 w-60 grid-cols-2 gap-2 place-self-center-safe p-3">
         <div className="hover:bg-editbox bg-editboxfocus border-diffcolor rounded-md border sm:block">
           <button
             type="button"

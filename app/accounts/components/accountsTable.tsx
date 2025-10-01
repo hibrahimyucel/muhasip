@@ -6,7 +6,14 @@ import { sqlOperator } from "@/lib/orm/orm-base";
 import { Table } from "@/lib/orm/table";
 import Icons from "@/components/icons";
 
-export default function AccountsTable() {
+type AccountsProps = {
+  EditRecordFunc: (id: number) => void;
+  AddRecordFunc: () => void;
+};
+export default function AccountsTable({
+  AddRecordFunc,
+  EditRecordFunc,
+}: AccountsProps) {
   const [accFilters, setaccFilters] = useState<Partial<accountsData>>({});
   const [Accounts, setAccounts] = useState<accountsData[]>([]);
   //const debouncedfullname = useDebounce(accFilters);
@@ -70,7 +77,17 @@ export default function AccountsTable() {
       is_member: value == "3",
     });
   }
-
+  function deleteRecord(id: number, fullname: string) {
+    const result = confirm(`${fullname} 
+      adlı hesabı silmek istiyor musunuz.`);
+    if (result)
+      try {
+        Table.accounts.delete(id);
+        getData();
+      } catch {
+        return;
+      }
+  }
   useEffect(() => {
     getData();
   }, []);
@@ -168,7 +185,7 @@ export default function AccountsTable() {
           <button
             type="button"
             className="h-full place-self-center"
-            //  onClick={() => onAdd()}
+            onClick={() => AddRecordFunc()}
           >
             <Icons icon="Add" />
           </button>
@@ -282,7 +299,7 @@ export default function AccountsTable() {
             <div className="flex w-6 px-1">
               <button
                 className="cursor-pointer"
-                // onClick={() => EditRecord(data.id_accounts)}
+                onClick={() => EditRecordFunc(data.id_accounts)}
               >
                 <Icons icon="List" />
               </button>
@@ -290,7 +307,7 @@ export default function AccountsTable() {
             <div className="flex w-6 px-1">
               <button
                 className="cursor-pointer"
-                // onClick={() => DeleteRecord(data.id_accounts, data.fullname)                      }
+                onClick={() => deleteRecord(data.id_accounts, data.fullname)}
               >
                 <Icons icon="DeleteRow" />
               </button>

@@ -38,9 +38,7 @@ export function CheckIcon({ Checked }: { Checked: boolean | undefined }) {
       <FiCheckSquare className="shrink-0 justify-end text-2xl text-green-500" />
     );
   else
-    return (
-      <FiSquare className="shrink-0 justify-end text-2xl text-green-500" />
-    );
+    return <FiSquare className="shrink-0 justify-end text-2xl text-gray-400" />;
 }
 export default function Icons({ icon }: { icon: Ico }) {
   switch (icon) {
@@ -55,7 +53,7 @@ export default function Icons({ icon }: { icon: Ico }) {
     case "Ok":
       return <FiCheckCircle className="shrink-0 text-2xl text-blue-600" />;
     case "Cancel":
-      return <FiXCircle className="shrink-0 text-2xl text-blue-600" />;
+      return <FiXCircle className="shrink-0 text-2xl text-red-500" />;
     case "Remove":
       return <FiMinusCircle className="shrink-0 text-2xl text-blue-600" />;
     case "Add":

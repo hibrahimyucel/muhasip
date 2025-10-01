@@ -1,5 +1,4 @@
 import React from "react";
-import { Table } from "@/lib/orm/table";
 import { TableProps } from "@/lib/orm/table-props";
 import Icons from "@/components/icons";
 export default function page() {

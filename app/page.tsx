@@ -7,20 +7,24 @@ export default function HomePage() {
         <HomePageCard
           Href="/accounts"
           Name="Accounts"
-          Desc="customers, members, partners"
+          Desc="customers, suppliers, members"
         />
-        <HomePageCard Href="/contactus" Name="Contact Us" Desc="" />
+        <HomePageCard
+          Href="/contactus"
+          Name="Contact Us"
+          Desc="Connect with personal security : not implemented yet"
+        />
 
-        <HomePageCard Href="/users" Name="Users" Desc="" />
+        <HomePageCard Href="/users" Name="Users" Desc="middleware users" />
         <HomePageCard
           Href="/dbinformation"
-          Name="Developper : Tables"
-          Desc=""
+          Name="Tables"
+          Desc="Developper : Database tables, MariaDB only"
         />
         <HomePageCard
           Href="/tailwindplay"
           Name="Tailwind Playground"
-          Desc="css deneme sayfası"
+          Desc="Developper : CSS"
         />
       </div>
     </main>
