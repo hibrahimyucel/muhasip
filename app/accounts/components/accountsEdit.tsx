@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import { accountsData } from "@/lib/orm/table-data";
 import { Table } from "@/lib/orm/table";
 import { TableProps } from "@/lib/orm/table-props";
-import Icons, { Ico } from "@/components/icons";
+import Icons from "@/components/icons";
 import { useDebounce } from "@/lib/hooks/Debounce";
+import { CheckIcon } from "@/components/icons";
 
 type accountsEditProps = {
   RecordId: number;
@@ -37,14 +38,13 @@ function initAccountData() {
 export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
   const [data, setData] = useState(initAccountData);
   const debouncedfullname = useDebounce(data);
-  console.log(RecordId);
+
   const aInf = TableProps.accounts;
   async function getData() {
     const d: accountsData[] = await Table.accounts.getbyID(RecordId);
     setData(d[0]);
   }
   async function SaveData() {
-    console.log(data);
     if (RecordId === -1) Table.accounts.insert(data);
     else Table.accounts.update(RecordId, data);
     onAdd();
@@ -107,7 +107,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
               className="flex h-full w-full flex-nowrap gap-1"
               onClick={() => setData({ ...data, is_person: !data.is_person })}
             >
-              <Icons icon={data.is_person ? Ico.icoChecked : Ico.icoCheckedX} />
+              <CheckIcon Checked={data.is_person} />
               {aInf.is_person.caption}
             </button>
           </div>
@@ -117,7 +117,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
               className="flex h-full w-full flex-nowrap gap-1"
               onClick={() => setData({ ...data, is_member: !data.is_member })}
             >
-              <Icons icon={data.is_member ? Ico.icoChecked : Ico.icoCheckedX} />
+              <CheckIcon Checked={data.is_member} />
               {aInf.is_member.caption}
             </button>
           </div>
@@ -129,9 +129,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
                 setData({ ...data, is_customer: !data.is_customer })
               }
             >
-              <Icons
-                icon={data.is_customer ? Ico.icoChecked : Ico.icoCheckedX}
-              />
+              <CheckIcon Checked={data.is_customer} />
               {aInf.is_customer.caption}
             </button>
           </div>
@@ -144,9 +142,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
                 setData({ ...data, is_supplier: !data.is_supplier })
               }
             >
-              <Icons
-                icon={data.is_supplier ? Ico.icoChecked : Ico.icoCheckedX}
-              />
+              <Icons icon={data.is_supplier ? "Checked" : "CheckedX"} />
               {aInf.is_supplier.caption}
             </button>
           </div>
@@ -289,7 +285,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
             onClick={() => SaveData()}
           >
             Kaydet
-            <Icons icon={Ico.icoOk} />
+            <Icons icon="Ok" />
           </button>
         </div>
         <div className="hover:bg-editbox bg-editboxfocus border-diffcolor rounded-md border sm:block">
@@ -299,7 +295,7 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
             onClick={() => onAdd()}
           >
             İptal
-            <Icons icon={Ico.icoCancel} />
+            <Icons icon="Cancel" />
           </button>
         </div>
       </div>

@@ -1,11 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #a8a8ff;
-  --diffcolor: #a7a7fd;
+  --background: #dddddd;
+  --diffcolor: #ededed;
   --foreground: #020210;
-  --editbox: #babaff;
-  --editboxfocus: #cacaff;
+  --editbox: #efefed;
+  --editboxfocus: #fdfdfd;
+  --bordercolor: #adadad;
 }
 
 @theme inline {
@@ -16,6 +17,7 @@
   --color-editbox: var(--editbox);
   --color-editboxfocus: var(--editboxfocus);
   --color-diffcolor: var(--diffcolor);
+  --color-bordercolor: var(--bordercolor);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,6 +27,7 @@
     --editbox: #010140;
     --editboxfocus: #010130;
     --foreground: #b6b6d3;
+    --bordercolor: #f0f0f0;
   }
 }
 

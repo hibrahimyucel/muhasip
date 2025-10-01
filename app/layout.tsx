@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/homepage/navbar";
 import "./globals.css";
 import { Suspense } from "react";
+import ApplicationHeader from "@/components/applicationHeader";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,12 +31,8 @@ export default function RootLayout({
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
-          <div className="h-12 w-full flex-col justify-center">
-            <Suspense fallback={"Loading"}>
-              <Navbar />
-            </Suspense>
-            <div className="flex w-full justify-center">{children}</div>
-          </div>
+          <ApplicationHeader />
+          <div className="flex justify-center">{children}</div>
         </body>
       </html>
     </ClerkProvider>

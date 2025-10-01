@@ -116,7 +116,7 @@ export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
   return (
     <div className="flex w-full justify-start pb-1 sm:justify-center">
       <div className="flex flex-wrap gap-1">
-        <div className="bg-editbox border-editboxfocus w-59.5 rounded-sm px-0.5 py-0.5">
+        <div className="bg-editbox border-editboxfocus w-50 rounded-sm px-0.5 py-0.5 sm:w-59.5">
           {TableProps.accounts.fullname.caption}
           <input
             type="text"
@@ -127,10 +127,10 @@ export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
               setaccFilters({ ...accFilters, fullname: e.target.value })
             }
             placeholder={TableProps.accounts.fullname.caption}
-            className="focus:bg-editboxfocus w-59 rounded-sm px-1 outline-0 focus:outline-0"
+            className="focus:bg-editboxfocus w-49.5 rounded-sm px-1 outline-0 focus:outline-0 sm:w-59"
           />
         </div>
-        <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
+        <div className="bg-editbox border-editboxfocus hidden w-60.5 rounded-sm px-0.5 py-0.5 sm:block">
           {TableProps.accounts.contactname.caption}
           <input
             type="text"
@@ -144,7 +144,7 @@ export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
             className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
           />
         </div>
-        <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
+        <div className="bg-editbox border-editboxfocus hidden w-60.5 rounded-sm px-0.5 py-0.5 sm:block">
           {TableProps.accounts.city.caption}
           <input
             type="text"
@@ -158,7 +158,7 @@ export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
             className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
           />
         </div>
-        <div className="bg-editbox border-editboxfocus w-60.5 rounded-sm px-0.5 py-0.5">
+        <div className="bg-editbox border-editboxfocus hidden w-60.5 rounded-sm px-0.5 py-0.5 sm:block">
           {TableProps.accounts.group.caption}
           <input
             list="items"
@@ -177,7 +177,7 @@ export function AccountsDBFilter({ onChange, onAdd }: AccountsDBFilterProps) {
           </datalist>
         </div>
 
-        <div className="bg-editbox border-editboxfocus w-30.5 rounded-sm px-0.5 py-0.5">
+        <div className="bg-editbox border-editboxfocus hidden w-30.5 rounded-sm px-0.5 py-0.5 sm:block">
           {" Hesap Tipi "}
           <select
             id="items1"
