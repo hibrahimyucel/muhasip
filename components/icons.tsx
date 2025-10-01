@@ -61,9 +61,9 @@ export default function Icons({ icon }: { icon: Ico }) {
     case "Add":
       return <FiPlusCircle className="shrink-0 text-2xl text-blue-600" />;
     case "LogOut":
-      return <FiLogOut />;
+      return <FiLogOut className="shrink-0 text-2xl text-blue-600" />;
     case "LogIn":
-      return <FiLogIn />;
+      return <FiLogIn className="shrink-0 text-2xl text-blue-600" />;
     case "Circle":
       return <FiCircle className="shrink-0 text-2xl text-blue-600" />;
 

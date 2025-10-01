@@ -62,7 +62,7 @@ export default function AccountsTable() {
     setAccounts(value);
   }
 
-  function handleSelectGroup(value: string) {
+  function handleSelectAccType(value: string) {
     setaccFilters({
       ...accFilters,
       is_customer: value == "1",
@@ -78,9 +78,8 @@ export default function AccountsTable() {
   return (
     <>
       {/** start Database filter */}
-
-      <div className="flex justify-center gap-0.5">
-        <div className="bg-editbox border-editboxfocus w-50 rounded-sm px-0.5 py-0.5 sm:w-59.5">
+      <header className="bg-diffcolor flex w-full gap-1 p-1">
+        <div className="ml-1 flex grow-1 basis-50 flex-col">
           {inf.fullname.caption}
           <input
             type="text"
@@ -91,10 +90,10 @@ export default function AccountsTable() {
               setaccFilters({ ...accFilters, fullname: e.target.value })
             }
             placeholder={inf.fullname.caption}
-            className="focus:bg-editboxfocus w-49.5 rounded-sm px-1 outline-0 focus:outline-0 sm:w-59"
+            className="focus:bg-editboxfocus w-full rounded-sm outline-0 focus:outline-0"
           />
         </div>
-        <div className="bg-editbox border-editboxfocus hidden w-60.5 rounded-sm px-0.5 py-0.5 sm:block">
+        <div className="hidden grow-1 basis-50 flex-col sm:block">
           {inf.contactname.caption}
           <input
             type="text"
@@ -105,10 +104,10 @@ export default function AccountsTable() {
               setaccFilters({ ...accFilters, contactname: e.target.value })
             }
             placeholder={inf.contactname.caption}
-            className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
+            className="focus:bg-editboxfocus w-full rounded-sm outline-0 focus:outline-0"
           />
         </div>
-        <div className="bg-editbox border-editboxfocus hidden w-60.5 rounded-sm px-0.5 py-0.5 sm:block">
+        <div className="hidden grow-1 basis-50 flex-col sm:block">
           {inf.city.caption}
           <input
             type="text"
@@ -119,10 +118,10 @@ export default function AccountsTable() {
               setaccFilters({ ...accFilters, city: e.target.value })
             }
             placeholder={inf.city.caption}
-            className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
+            className="focus:bg-editboxfocus w-full rounded-sm outline-0 focus:outline-0"
           />
         </div>
-        <div className="bg-editbox border-editboxfocus hidden w-60.5 rounded-sm px-0.5 py-0.5 sm:block">
+        <div className="hidden grow-1 basis-50 flex-col sm:block">
           {inf.group.caption}
           <input
             list="items"
@@ -132,7 +131,7 @@ export default function AccountsTable() {
               setaccFilters({ ...accFilters, acc_group: e.target.value })
             }
             placeholder={inf.group.caption}
-            className="focus:bg-editboxfocus w-60 rounded-sm px-1 outline-0 focus:outline-0"
+            className="focus:bg-editboxfocus w-full rounded-sm outline-0 focus:outline-0"
           />
           <datalist id="items">
             <option value="123" />
@@ -141,13 +140,13 @@ export default function AccountsTable() {
           </datalist>
         </div>
 
-        <div className="bg-editbox border-editboxfocus hidden w-30.5 rounded-sm px-0.5 py-0.5 sm:block">
+        <div className="hover:bg-editboxfocus hidden grow-1 basis-50 flex-col sm:block">
           {" Hesap Tipi "}
           <select
             id="items1"
             name="tip"
-            onChange={(e) => handleSelectGroup(e.target.value)}
-            className="focus:bg-editboxfocus w-30 rounded-sm px-1 outline-0 focus:outline-0"
+            onChange={(e) => handleSelectAccType(e.target.value)}
+            className="focus:bg-editboxfocus w-full rounded-sm outline-0 focus:outline-0"
           >
             <option value="0">Hepsi</option>
             <option value="1">Alıcı</option>
@@ -156,31 +155,31 @@ export default function AccountsTable() {
           </select>
         </div>
 
-        <div className="hover:bg-editbox bg-editboxfocus border-diffcolor rounded-md border">
+        <div className="hover:bg-editboxfocus shrink-0 grow-0 cursor-pointer justify-center rounded-md p-1">
           <button
             type="button"
-            className="flex h-full w-10 items-center justify-center"
+            className="h-full place-self-center"
             onClick={getData}
           >
             <Icons icon="List" />
           </button>
         </div>
-        <div className="hover:bg-editbox bg-editboxfocus border-diffcolor rounded-md border">
+        <div className="hover:bg-editboxfocus shrink-0 grow-0 cursor-pointer justify-center rounded-md p-1">
           <button
             type="button"
-            className="flex h-full w-10 items-center justify-center"
+            className="h-full place-self-center"
             //  onClick={() => onAdd()}
           >
             <Icons icon="Add" />
           </button>
         </div>
-      </div>
+      </header>
       {/** end Database filter */}
       {/** start Local filter table-header */}
 
-      <div className="flex justify-center gap-1">
-        <div className="flex w-65 flex-col rounded-t-md border">
-          <button className="right-0 flex h-7 w-65">
+      <section className="flex w-full">
+        <div className="flex grow basis-50 flex-col rounded-t-md border">
+          <button className="right-0 flex">
             <h2 className="flex w-full justify-center">
               {inf.fullname.caption}
             </h2>
@@ -195,8 +194,8 @@ export default function AccountsTable() {
             className="flex w-full border-t px-1 outline-0"
           />
         </div>
-        <div className="hidden w-50 flex-col rounded-t-md border sm:flex">
-          <button className="right-0 flex h-7 w-50">
+        <div className="hidden grow basis-50 flex-col rounded-t-md border sm:flex">
+          <button className="right-0 flex">
             <h2 className="flex w-full justify-center">
               {inf.contactname.caption}
             </h2>
@@ -211,8 +210,8 @@ export default function AccountsTable() {
             className="flex w-full border-t px-1 outline-0"
           />
         </div>
-        <div className="hidden w-80 flex-col rounded-t-md border sm:flex">
-          <button className="right-0 flex h-7 w-80">
+        <div className="hidden grow basis-50 flex-col rounded-t-md border sm:flex">
+          <button className="right-0 flex">
             <h2 className="flex w-full justify-center">{inf.adress.caption}</h2>
             <div className="right-0 pr-1 text-2xl">
               <Icons icon="List" />
@@ -225,8 +224,8 @@ export default function AccountsTable() {
             className="flex w-full border-t px-1 outline-0"
           />
         </div>
-        <div className="hidden w-40 flex-col rounded-t-md border sm:flex">
-          <button className="right-0 flex h-7 w-40">
+        <div className="hidden grow basis-50 flex-col rounded-t-md border sm:flex">
+          <button className="right-0 flex">
             <h2 className="flex w-full justify-center">{inf.city.caption}</h2>
             <div className="right-0 pr-1 text-2xl">
               <Icons icon="List" />
@@ -239,8 +238,8 @@ export default function AccountsTable() {
             className="flex w-full border-t px-1 outline-0"
           />
         </div>
-        <div className="hidden w-65 flex-col rounded-t-md border sm:flex">
-          <button className="right-0 flex h-7 w-65">
+        <div className="hidden grow basis-50 flex-col rounded-t-md border sm:flex">
+          <button className="right-0 flex">
             <h2 className="flex w-full justify-center">{inf.email.caption}</h2>
             <div className="right-0 pr-1 text-2xl">
               <Icons icon="List" />
@@ -253,52 +252,53 @@ export default function AccountsTable() {
             className="flex w-full border-t px-1 outline-0"
           />
         </div>
-      </div>
+        <div className="flex w-17 shrink-0 grow-0 flex-col rounded-t-md"></div>
+      </section>
 
       {/** end Local filter */}
       {/** start Table data */}
-      <div className="flex justify-center">
-        <div className="flex h-[calc(100vh-10.5rem)] flex-col overflow-y-scroll">
-          {Accounts.map((data, index) => (
-            <div
-              key={data.id_accounts.toString()}
-              className={`flex gap-0.5 ${index % 2 ? "bg-background" : "bg-diffcolor"} `}
-            >
-              <div className="flex w-50 justify-start truncate px-1 sm:w-64">
-                <p>{data.fullname}</p>
-              </div>
-              <div className="hidden w-50 justify-start truncate px-1 sm:flex">
-                <p>{data.contactname}</p>
-              </div>
-              <div className="hidden w-78 justify-start truncate px-1 sm:flex">
-                <p>{data.adress}</p>
-              </div>
-              <div className="hidden w-40 justify-start truncate px-1 sm:flex">
-                <p>{data.city}</p>
-              </div>
-              <div className="hidden w-50.5 justify-start truncate px-1 sm:flex">
-                <p>{data.email}</p>
-              </div>
-              <div className="flex w-7 justify-start truncate px-1">
-                <button
-                  className="cursor-pointer"
-                  // onClick={() => EditRecord(data.id_accounts)}
-                >
-                  <Icons icon="List" />
-                </button>
-              </div>
-              <div className="flex w-7 justify-start truncate px-1">
-                <button
-                  className="cursor-pointer"
-                  // onClick={() => DeleteRecord(data.id_accounts, data.fullname)                      }
-                >
-                  <Icons icon="DeleteRow" />
-                </button>
-              </div>
+
+      <div className="flex w-full grow flex-col overflow-y-scroll border pr-1">
+        {Accounts.map((data, index) => (
+          <div
+            key={data.id_accounts.toString()}
+            className={`flex ${index % 2 ? "bg-background" : "bg-diffcolor"} `}
+          >
+            <div className="flex grow basis-50 overflow-hidden px-1 text-nowrap text-clip">
+              {data.fullname}
             </div>
-          ))}
-        </div>
+            <div className="hidden grow basis-50 overflow-hidden px-1 text-nowrap text-clip sm:flex">
+              {data.contactname}
+            </div>
+            <div className="hidden grow basis-50 overflow-hidden px-1 text-nowrap text-clip sm:flex">
+              {data.adress}
+            </div>
+            <div className="hidden grow basis-50 overflow-hidden px-1 text-nowrap text-clip sm:flex">
+              {data.city}
+            </div>
+            <div className="hidden grow basis-50 overflow-hidden px-1 text-nowrap text-clip sm:flex">
+              {data.email}
+            </div>
+            <div className="flex w-6 px-1">
+              <button
+                className="cursor-pointer"
+                // onClick={() => EditRecord(data.id_accounts)}
+              >
+                <Icons icon="List" />
+              </button>
+            </div>
+            <div className="flex w-6 px-1">
+              <button
+                className="cursor-pointer"
+                // onClick={() => DeleteRecord(data.id_accounts, data.fullname)                      }
+              >
+                <Icons icon="DeleteRow" />
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
+
       {/** end Table data */}
     </>
   );
