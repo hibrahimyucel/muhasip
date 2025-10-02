@@ -3,7 +3,6 @@ import { accountsData } from "@/lib/orm/table-data";
 import { Table } from "@/lib/orm/table";
 import { TableProps } from "@/lib/orm/table-props";
 import Icons from "@/components/icons";
-import { useDebounce } from "@/lib/hooks/Debounce";
 import { CheckIcon } from "@/components/icons";
 
 type accountsEditProps = {
@@ -13,7 +12,6 @@ type accountsEditProps = {
 
 export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
   const [data, setData] = useState<Partial<accountsData>>({});
-  const debouncedfullname = useDebounce(data);
 
   const aInf = TableProps.accounts;
   async function getData() {
@@ -75,9 +73,9 @@ export default function AccountsEdit({ RecordId, onAdd }: accountsEditProps) {
               className="focus:bg-editboxfocus w-full rounded-sm px-1 outline-0 focus:outline-0"
             />
             <datalist id="items">
-              <option value="123" />
-              <option value="124" />
-              <option value="135" />
+              <option value="Bireysel" />
+              <option value="Kurumsal" />
+              <option value="Şehir Dışı" />
             </datalist>
           </div>
 

@@ -64,7 +64,6 @@ export abstract class TableBase<T> {
         .map((key) => `${key} ${whereProp.condition} ? `)
         .join("AND ");
     });
-
     whereClause = whereClause ? `OR ( ${whereClause}  )` : "";
     const sql = `SELECT * FROM ${this.tableName} WHERE 1=2 ${whereClause}`;
     return await ORMQuery(sql, paramValues);
@@ -82,10 +81,6 @@ export abstract class TableBase<T> {
     values.map((v) => {
       if (v == null) {
         paramValues.push(null);
-      } else if (v == true) {
-        paramValues.push(1);
-      } else if (v == false) {
-        paramValues.push(0);
       } else paramValues.push(encodeURIComponent(v as string));
     });
     const placeholders = keys.map(() => ` ?`).join(", ");
@@ -111,16 +106,11 @@ export abstract class TableBase<T> {
     values.map((v) => {
       if (v == null) {
         paramValues.push(null);
-      } else if (v == true) {
-        paramValues.push(1);
-      } else if (v == false) {
-        paramValues.push(0);
       } else paramValues.push(encodeURIComponent(v as string));
     });
     if (keys.length === 0) {
       throw new Error("No fields to update.");
     }
-    console.log(paramValues);
 
     const setClause = keys.map((key) => `${key} = ?`).join(", ");
 
