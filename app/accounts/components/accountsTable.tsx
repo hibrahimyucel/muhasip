@@ -10,14 +10,36 @@ type AccountsProps = {
   EditRecordFunc: (id: number) => void;
   AddRecordFunc: () => void;
 };
+type AccountSortProps = {
+  field: keyof accountsData;
+  ascending: boolean;
+};
+const orderStr = (a: string, b: string, ascending: boolean = true): number => {
+  if (ascending) {
+    return a.localeCompare(b) > 0 ? 1 : -1;
+  } else {
+    return a.localeCompare(b) > 0 ? -1 : 1;
+  }
+};
 export default function AccountsTable({
   AddRecordFunc,
   EditRecordFunc,
 }: AccountsProps) {
-  const [accFilters, setaccFilters] = useState<Partial<accountsData>>({});
-  const [Accounts, setAccounts] = useState<accountsData[]>([]);
-  //const debouncedfullname = useDebounce(accFilters);
   const inf = TableProps.accounts;
+
+  const [accFilters, setaccFilters] = useState<Partial<accountsData>>({});
+
+  const [accLocalFilters, setaccLocalFilters] = useState<Partial<accountsData>>(
+    {},
+  );
+
+  const [data, setData] = useState<accountsData[]>([]);
+
+  const [sortConfig, setsortConfig] = useState<AccountSortProps>({
+    field: "fullname",
+    ascending: true,
+  });
+
   async function getData() {
     const whereProps: {
       terms: Partial<accountsData>;
@@ -66,7 +88,7 @@ export default function AccountsTable({
         });
     }
     const value = await Table.accounts.getData(whereProps);
-    setAccounts(value);
+    setData(value);
   }
 
   function handleSelectAccType(value: string) {
@@ -77,17 +99,68 @@ export default function AccountsTable({
       is_member: value == "3",
     });
   }
-  function deleteRecord(id: number, fullname: string) {
+  function handleLocalFilterInput(
+    key: keyof typeof accLocalFilters,
+    value: string,
+  ) {
+    let obj: Partial<accountsData> = {};
+    if (value.trim()) (obj[key] as string) = value;
+    setaccLocalFilters(obj);
+  }
+  async function deleteRecord(id: number, fullname: string) {
     const result = confirm(`${fullname} 
       adlı hesabı silmek istiyor musunuz.`);
     if (result)
       try {
-        Table.accounts.delete(id);
+        await Table.accounts.delete(id);
         getData();
       } catch {
         return;
       }
   }
+
+  function RequestSort(v: keyof accountsData) {
+    if (v !== sortConfig.field) {
+      setsortConfig((prev: AccountSortProps) => ({
+        ...prev,
+        field: v,
+      }));
+    } else {
+      setsortConfig((prev: AccountSortProps) => ({
+        ...prev,
+        ascending: !prev.ascending,
+      }));
+    }
+  }
+  let Accounts: accountsData[] = [];
+  const entries = Object.entries(accLocalFilters);
+  if (entries.length)
+    Accounts = data.filter((item) =>
+      entries.every(([key, value]) =>
+        item[key as keyof typeof item]
+          ? item[key as keyof typeof item]
+              .toString()
+              .toLocaleLowerCase()
+              .includes(value.toString())
+          : false,
+      ),
+    );
+  else Accounts = data;
+
+  {
+    Accounts.sort((a: accountsData, b: accountsData) => {
+      return orderStr(
+        a[sortConfig.field]
+          ? a[sortConfig.field]?.toString().toLowerCase()
+          : "",
+        b[sortConfig.field]
+          ? b[sortConfig.field]?.toString().toLowerCase()
+          : "",
+        sortConfig.ascending,
+      );
+    });
+  }
+
   useEffect(() => {
     getData();
   }, []);
@@ -196,28 +269,56 @@ export default function AccountsTable({
 
       <section className="flex w-full">
         <div className="flex grow basis-50 flex-col rounded-t-md border">
-          <button className="right-0 flex">
+          <button
+            className="right-0 flex"
+            onClick={() => RequestSort("fullname")}
+          >
             <h2 className="flex w-full justify-center">
               {inf.fullname.caption}
             </h2>
             <div className="right-0 pr-1 text-2xl">
-              <Icons icon="List" />
+              <Icons
+                icon={
+                  sortConfig.field == inf.fullname.name
+                    ? sortConfig.ascending
+                      ? "SortAscendant"
+                      : "SortDescendant"
+                    : "List"
+                }
+              />
             </div>
           </button>
           <input
             type="text"
             name={inf.fullname.name}
             maxLength={inf.fullname.maxlength}
+            onChange={(e) =>
+              handleLocalFilterInput(
+                "fullname",
+                e.target.value.toLocaleLowerCase(),
+              )
+            }
             className="flex w-full border-t px-1 outline-0"
           />
         </div>
         <div className="hidden grow basis-50 flex-col rounded-t-md border sm:flex">
-          <button className="right-0 flex">
+          <button
+            className="right-0 flex"
+            onClick={() => RequestSort("contactname")}
+          >
             <h2 className="flex w-full justify-center">
               {inf.contactname.caption}
             </h2>
             <div className="right-0 pr-1 text-2xl">
-              <Icons icon="List" />
+              <Icons
+                icon={
+                  sortConfig.field == inf.contactname.name
+                    ? sortConfig.ascending
+                      ? "SortAscendant"
+                      : "SortDescendant"
+                    : "List"
+                }
+              />
             </div>
           </button>
           <input
@@ -225,13 +326,30 @@ export default function AccountsTable({
             name={inf.contactname.name}
             maxLength={inf.contactname.maxlength}
             className="flex w-full border-t px-1 outline-0"
+            onChange={(e) =>
+              handleLocalFilterInput(
+                "contactname",
+                e.target.value.toLocaleLowerCase(),
+              )
+            }
           />
         </div>
         <div className="hidden grow basis-50 flex-col rounded-t-md border sm:flex">
-          <button className="right-0 flex">
+          <button
+            className="right-0 flex"
+            onClick={() => RequestSort("adress")}
+          >
             <h2 className="flex w-full justify-center">{inf.adress.caption}</h2>
             <div className="right-0 pr-1 text-2xl">
-              <Icons icon="List" />
+              <Icons
+                icon={
+                  sortConfig.field == "adress"
+                    ? sortConfig.ascending
+                      ? "SortAscendant"
+                      : "SortDescendant"
+                    : "List"
+                }
+              />
             </div>
           </button>
           <input
@@ -239,13 +357,27 @@ export default function AccountsTable({
             name={inf.adress.name}
             maxLength={inf.adress.maxlength}
             className="flex w-full border-t px-1 outline-0"
+            onChange={(e) =>
+              handleLocalFilterInput(
+                "adress",
+                e.target.value.toLocaleLowerCase(),
+              )
+            }
           />
         </div>
         <div className="hidden grow basis-50 flex-col rounded-t-md border sm:flex">
-          <button className="right-0 flex">
+          <button className="right-0 flex" onClick={() => RequestSort("city")}>
             <h2 className="flex w-full justify-center">{inf.city.caption}</h2>
             <div className="right-0 pr-1 text-2xl">
-              <Icons icon="List" />
+              <Icons
+                icon={
+                  sortConfig.field == "city"
+                    ? sortConfig.ascending
+                      ? "SortAscendant"
+                      : "SortDescendant"
+                    : "List"
+                }
+              />
             </div>
           </button>
           <input
@@ -253,13 +385,24 @@ export default function AccountsTable({
             name={inf.city.name}
             maxLength={inf.city.maxlength}
             className="flex w-full border-t px-1 outline-0"
+            onChange={(e) =>
+              handleLocalFilterInput("city", e.target.value.toLocaleLowerCase())
+            }
           />
         </div>
         <div className="hidden grow basis-50 flex-col rounded-t-md border sm:flex">
-          <button className="right-0 flex">
+          <button className="right-0 flex" onClick={() => RequestSort("email")}>
             <h2 className="flex w-full justify-center">{inf.email.caption}</h2>
             <div className="right-0 pr-1 text-2xl">
-              <Icons icon="List" />
+              <Icons
+                icon={
+                  sortConfig.field == "email"
+                    ? sortConfig.ascending
+                      ? "SortAscendant"
+                      : "SortDescendant"
+                    : "List"
+                }
+              />
             </div>
           </button>
           <input
@@ -267,6 +410,12 @@ export default function AccountsTable({
             name={inf.email.name}
             maxLength={inf.email.maxlength}
             className="flex w-full border-t px-1 outline-0"
+            onChange={(e) =>
+              handleLocalFilterInput(
+                "email",
+                e.target.value.toLocaleLowerCase(),
+              )
+            }
           />
         </div>
         <div className="flex w-17 shrink-0 grow-0 flex-col rounded-t-md"></div>
