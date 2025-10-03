@@ -103,7 +103,7 @@ export default function AccountsTable({
     key: keyof typeof accLocalFilters,
     value: string,
   ) {
-    let obj: Partial<accountsData> = {};
+    const obj: Partial<accountsData> = {};
     if (value.trim()) (obj[key] as string) = value;
     setaccLocalFilters(obj);
   }
